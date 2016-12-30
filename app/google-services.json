@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "637158676834",
+    "firebase_url": "https://salarymanagement-ee006.firebaseio.com",
+    "project_id": "salarymanagement-ee006",
+    "storage_bucket": "salarymanagement-ee006.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637158676834:android:0b11ac786f3b19e4",
+        "android_client_info": {
+          "package_name": "com.example.victo.salarymanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637158676834-tsb95a9nimks55drpff8ij1gee3qpoqq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.victo.salarymanagement",
+            "certificate_hash": "1BE7BE2786705FB5EF95A259D2672C24D358080D"
+          }
+        },
+        {
+          "client_id": "637158676834-38qq6vro5srpbqt2b8fpe3d8i0nk858o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwxBebV52XORu9Tp-qW0dKR55Nk8mUBGs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637158676834-38qq6vro5srpbqt2b8fpe3d8i0nk858o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
