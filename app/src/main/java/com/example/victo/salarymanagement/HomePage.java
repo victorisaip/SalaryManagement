@@ -5,6 +5,9 @@ Description: Apps to manage the employment salary according to the total hours w
 Víctor Branch 12/30/2016
  */
 
+/*
+* Developers: Victor , Saul , Ramesh
+* */
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
