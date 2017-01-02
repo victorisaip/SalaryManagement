@@ -20,6 +20,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomePage extends AppCompatActivity {
     //Constants
@@ -29,6 +31,10 @@ public class HomePage extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
+
+    //Firebase attributes
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     //Layout attributes
     TextView tvUserName,tvPassword,tvRegisterName,tvRegisterEmail,tvRegisterPassword,tvBusinessRole;
@@ -66,9 +72,11 @@ public class HomePage extends AppCompatActivity {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     //Sign in is succeed
-                    String name = user.getDisplayName();
+                    String name;
                     String email = user.getEmail();
-                    String uid = user.getUid();
+                    String password ;
+
+
 
                     Toast.makeText(HomePage.this, "Succesfully signed in by: "+email, Toast.LENGTH_SHORT).show();
 
@@ -108,10 +116,16 @@ public class HomePage extends AppCompatActivity {
         String password = etRegisterPassword.getText().toString();
         String name = etRegisterName.getText().toString();
         if(checkBusinessRole()){
+            database = FirebaseDatabase.getInstance();
+            myRef = database.getReference("Salary_Management_DB");
             if(chbEmployee.isChecked()){
                 createAccount(name,email,password,"employee");
+                User myUser = new User(email,password,name,"employee");
+                myRef.push().setValue(myUser);
             } else {
                 createAccount(name,email,password,"manager");
+                User myUser = new User(email,password,name,"manager");
+                myRef.push().setValue(myUser);
             }
         }
 
