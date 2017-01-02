@@ -10,42 +10,190 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.victo.salarymanagement.HomePage"
     android:orientation="vertical">
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Log In"
+        android:textSize="20dp"
         android:id="@+id/tvLabelLogIn"
         />
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvUserName"
-        android:text="Username:"/>
+        android:orientation="horizontal"
+        android:id="@+id/layoutLogIn">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="username"
-        android:id="@+id/eTuserName"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layoutUserName">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvUserName"
+                android:textSize="15dp"
+                android:text="Username:"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvPassword"
-        android:text="Password:"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="username"
+                android:textSize="15dp"
+                android:id="@+id/eTuserName"/>
+        </LinearLayout>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="password"
-        android:id="@+id/eTpassword"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layoutPassword">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvPassword"
+                android:textSize="15dp"
+                android:text="Password:"/>
 
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="password"
+                android:textSize="15dp"
+                android:id="@+id/eTpassword"
+                android:inputType="textPassword"
+                />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnLogIn"
         android:text="Log in"
+        android:textSize="15dp"
         android:onClick="logIn"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register User"
+        android:textSize="20dp"
+        android:id="@+id/tvLabelRegisterUser"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/layoutRegisterUser">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layoutRegisterUserName">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvName"
+                android:textSize="15dp"
+                android:text="Name: "/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="name"
+                android:textSize="15dp"
+                android:id="@+id/eTName"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layoutRegisterEmail">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvRegisterEmail"
+                android:textSize="15dp"
+                android:text="Email: "/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="email"
+                android:textSize="15dp"
+                android:id="@+id/eTregisterEmail"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layoutRegisterPassword">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvRegisterPassword"
+                android:textSize="15dp"
+                android:text="Password: "/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="password"
+                android:inputType="textPassword"
+                android:textSize="15dp"
+                android:id="@+id/eTRegisterPassword"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layoutRegisterBusinessRole">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvRegisterBusinessRole"
+                android:textSize="15dp"
+                android:text="Business Role: "/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chbManager"
+                android:text="Manager"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chbEmployee"
+                android:text="Employee"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/layoutButtons">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnRegisterUser"
+            android:text="Register user"
+            android:onClick="registerUser"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnLogOut"
+            android:text="Logout"
+            android:onClick="logOut"/>
+
+    </LinearLayout>
+
 </LinearLayout>

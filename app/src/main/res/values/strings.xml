@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SalaryManagement</string>
+    <string name="app_name">Salary Management System</string>
+    <string name="title_activity_main_menu_for_employees">MainMenuForEmployees</string>
 </resources>
