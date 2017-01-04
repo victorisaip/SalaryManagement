@@ -19,7 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,9 +31,8 @@ public class HomePage extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
 
-    //Firebase attributes
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
+    //Database attributes
+    DatabaseManager myManager;
 
     //Layout attributes
     TextView tvUserName,tvPassword,tvRegisterName,tvRegisterEmail,tvRegisterPassword,tvBusinessRole;
@@ -61,6 +59,9 @@ public class HomePage extends AppCompatActivity {
         chbManager = (CheckBox) findViewById(R.id.chbManager);
         chbEmployee = (CheckBox) findViewById(R.id.chbEmployee);
 
+
+        //Realtime Database
+        myManager = DatabaseManager.getInstance();
         //Authentication
         mAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -71,20 +72,15 @@ public class HomePage extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
                     //Sign in is succeed
-                    String name;
                     String email = user.getEmail();
-                    String password ;
-
-
 
                     Toast.makeText(HomePage.this, "Succesfully signed in by: "+email, Toast.LENGTH_SHORT).show();
-
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-
             }
         };
 
@@ -109,26 +105,28 @@ public class HomePage extends AppCompatActivity {
         String email = etUserName.getText().toString();
         String password = etPassword.getText().toString();
         signIn(email,password);
+
+        myManager.readUser(email);
     }
 
     public void registerUser(View view) {
         String email = etRegisterEmail.getText().toString();
         String password = etRegisterPassword.getText().toString();
         String name = etRegisterName.getText().toString();
-        if(checkBusinessRole()){
-            database = FirebaseDatabase.getInstance();
-            myRef = database.getReference("Salary_Management_DB");
-            if(chbEmployee.isChecked()){
-                createAccount(name,email,password,"employee");
-                User myUser = new User(email,password,name,"employee");
-                myRef.push().setValue(myUser);
-            } else {
-                createAccount(name,email,password,"manager");
-                User myUser = new User(email,password,name,"manager");
-                myRef.push().setValue(myUser);
+        if(validateFormRegister()){
+            if(checkBusinessRole()){
+
+                if(chbEmployee.isChecked()){
+                     myManager.createUser(email,password,name,"employee");
+                    createAccount(name,email,password,"employee");
+
+
+                } else {
+                    myManager.createUser(email,password,name,"manager");
+                    createAccount(name,email,password,"manager");
+                }
             }
         }
-
     }
 
     private void signIn(String email,String password){
