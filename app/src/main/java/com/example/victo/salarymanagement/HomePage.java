@@ -31,7 +31,7 @@ public class HomePage extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
 
-    //Database attributes
+    //Database Instance
     DatabaseManager myManager;
 
     //Layout attributes
@@ -60,8 +60,6 @@ public class HomePage extends AppCompatActivity {
         chbEmployee = (CheckBox) findViewById(R.id.chbEmployee);
 
 
-        //Realtime Database
-        myManager = DatabaseManager.getInstance();
         //Authentication
         mAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -89,6 +87,7 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG,"On Start");
         mAuth.addAuthStateListener(mAuthListener);
     }
 
@@ -102,11 +101,10 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void logIn(View view) {
+        Log.d(TAG,"LogIn");
         String email = etUserName.getText().toString();
         String password = etPassword.getText().toString();
         signIn(email,password);
-
-        myManager.readUser(email);
     }
 
     public void registerUser(View view) {
@@ -115,23 +113,23 @@ public class HomePage extends AppCompatActivity {
         String name = etRegisterName.getText().toString();
         if(validateFormRegister()){
             if(checkBusinessRole()){
-
                 if(chbEmployee.isChecked()){
-                     myManager.createUser(email,password,name,"employee");
+
                     createAccount(name,email,password,"employee");
 
-
                 } else {
-                    myManager.createUser(email,password,name,"manager");
                     createAccount(name,email,password,"manager");
+
+
                 }
             }
         }
     }
 
     private void signIn(String email,String password){
-
+        Log.d(TAG,"Sign in");
         if(validateFormLogIn()){
+            Log.d(TAG,"Entered SignIn");
             mAuth.signInWithEmailAndPassword(etUserName.getText().toString(),etPassword.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -175,6 +173,8 @@ public class HomePage extends AppCompatActivity {
         }
         return valid;
     }
+
+
 
     private boolean validateFormLogIn(){
         boolean valid = true;
