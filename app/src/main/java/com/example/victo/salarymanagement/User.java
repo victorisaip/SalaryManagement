@@ -5,7 +5,7 @@ package com.example.victo.salarymanagement;
  */
 
 public class User {
-
+    private String id;
     private String email;
     private String password;
     private String name;
@@ -18,8 +18,11 @@ public class User {
         this.password = password;
         this.name = name;
         this.businessRole = businessRole;
-        this.state = "active";
         this.attemptsOfLogIn = 0;
+    }
+
+    public User(){
+
     }
 
     public String getEmail() {
@@ -68,6 +71,14 @@ public class User {
 
     public void setAttemptsOfLogIn(int attemptsOfLogIn) {
         this.attemptsOfLogIn = attemptsOfLogIn;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
