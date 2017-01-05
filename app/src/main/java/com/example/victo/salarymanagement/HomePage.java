@@ -105,6 +105,7 @@ public class HomePage extends AppCompatActivity {
         String email = etUserName.getText().toString();
         String password = etPassword.getText().toString();
         signIn(email,password);
+        myManager.getInstance();
     }
 
     public void registerUser(View view) {
@@ -116,21 +117,47 @@ public class HomePage extends AppCompatActivity {
                 if(chbEmployee.isChecked()){
 
                     createAccount(name,email,password,"employee");
+                    signInAfterRegister(email,password);
+                    myManager.getInstance();
+                    myManager.createUser(email,password,name,"employee");
 
                 } else {
                     createAccount(name,email,password,"manager");
-
 
                 }
             }
         }
     }
 
+
+    private void signInAfterRegister(String email,String password){
+        Log.d(TAG,"Sign in");
+
+            Log.d(TAG,"Entered SignIn");
+            mAuth.signInWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                            clearWindowLogIn();
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "signInWithEmail", task.getException());
+                                Toast.makeText(HomePage.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+        }
+
     private void signIn(String email,String password){
         Log.d(TAG,"Sign in");
         if(validateFormLogIn()){
             Log.d(TAG,"Entered SignIn");
-            mAuth.signInWithEmailAndPassword(etUserName.getText().toString(),etPassword.getText().toString())
+            mAuth.signInWithEmailAndPassword(email,password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

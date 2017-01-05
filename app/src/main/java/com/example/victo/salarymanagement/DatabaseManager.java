@@ -28,6 +28,7 @@ public class DatabaseManager {
         Log.d(TAG, "Constructor Enters");
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Salary_Management_DB");
+        myRef.child("users");
         myRef.addValueEventListener(new ValueEventListener() {
             String[] arr = new String[6];
 
@@ -46,7 +47,7 @@ public class DatabaseManager {
 
                     user.setId(id);
                     Log.d(TAG,"Key: "+user.getId());
-                    users.add(user);
+                    //users.add(user);
                 }
             }
 
@@ -69,7 +70,7 @@ public class DatabaseManager {
         Log.d(TAG, "Create user: Enters");
         User myUser = new User(email,password,name,businessRole);
         myRef.push().setValue(myUser);
-        users.add(myUser);
+        //users.add(myUser);
     }
 
     public void readUser(String email){
