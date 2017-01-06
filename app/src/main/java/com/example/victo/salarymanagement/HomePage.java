@@ -4,6 +4,7 @@ Project name:  Salary Management
 Description: Apps to manage the employment salary according to the total hours worked.
 Developers: Victor , Saul , Ramesh */
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class HomePage extends AppCompatActivity {
     //Constants
-    private static final String TAG = "Authentication";
+
+    private static final String TAG = "Authentication" ;
+    private static final String KEY= "Credentials";
+
 
     //Authentication attributes
     private FirebaseAuth mAuth;
@@ -145,10 +149,11 @@ public class HomePage extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                             clearWindowLogIn();
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
+                            if(task.isSuccessful()){
+                                Intent myIntent = new Intent(HomePage.this,MainMenuForEmployees.class);
+                                myIntent.putExtra(KEY,"email");
+                                startActivity(myIntent);
+                            } else {
                                 Log.w(TAG, "signInWithEmail", task.getException());
                                 Toast.makeText(HomePage.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
