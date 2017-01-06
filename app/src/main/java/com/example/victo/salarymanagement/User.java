@@ -18,6 +18,7 @@ public class User {
         this.password = password;
         this.name = name;
         this.businessRole = businessRole;
+        this.state = "active";
         this.attemptsOfLogIn = 0;
     }
 
