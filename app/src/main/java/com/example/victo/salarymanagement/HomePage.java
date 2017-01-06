@@ -4,10 +4,16 @@ Project name:  Salary Management
 Description: Apps to manage the employment salary according to the total hours worked.
 Developers: Victor , Saul , Ramesh */
 
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -44,11 +50,16 @@ public class HomePage extends AppCompatActivity {
     TextView tvUserName, tvPassword, tvRegisterName, tvRegisterEmail, tvRegisterPassword, tvBusinessRole;
     EditText etUserName, etPassword, etRegisterName, etRegisterEmail, etRegisterPassword;
     CheckBox chbManager, chbEmployee;
+    Toolbar toolbar;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    ViewPagerAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
 
         //Layout Elements
         tvUserName = (TextView) findViewById(R.id.tvUserName);
@@ -64,11 +75,20 @@ public class HomePage extends AppCompatActivity {
         etRegisterPassword = (EditText) findViewById(R.id.eTRegisterPassword);
         chbManager = (CheckBox) findViewById(R.id.chbManager);
         chbEmployee = (CheckBox) findViewById(R.id.chbEmployee);
-
-
+        toolbar = (Toolbar) findViewById(R.id.my_tool_bar);
+        setSupportActionBar(toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) findViewById(R.id.view_logIn);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragments(new LogInFragment(),"Log in");
+        viewPagerAdapter.addFragments(new SignUpFragment(),"Sign up");
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
         //Authentication
         mAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
+
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -87,6 +107,9 @@ public class HomePage extends AppCompatActivity {
                 }
             }
         };
+
+
+
 
     }
 

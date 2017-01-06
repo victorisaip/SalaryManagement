@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.victo.salarymanagement.SignUpFragment">
+
+    <TextView
+        android:id="@+id/tvLabelRegisterUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Register User"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name: " />
+
+    <EditText
+        android:id="@+id/eTName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="name"
+        android:textSize="15dp" />
+
+
+    <TextView
+        android:id="@+id/tvRegisterEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Email: "/>
+
+    <EditText
+        android:id="@+id/eTregisterEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="email"
+        />
+
+    <TextView
+        android:id="@+id/tvRegisterPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Password: "
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/eTRegisterPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password"
+        android:inputType="textPassword"
+        />
+
+    <TextView
+        android:id="@+id/tvRegisterBusinessRole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Business Role: "
+         />
+
+    <CheckBox
+        android:id="@+id/chbManager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Manager" />
+
+    <CheckBox
+        android:id="@+id/chbEmployee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Employee" />
+
+
+    <Button
+        android:id="@+id/btnRegisterUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:onClick="registerUser"
+        android:text="Register user" />
+
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="logOut"
+        android:text="Logout" />
+
+</LinearLayout>
