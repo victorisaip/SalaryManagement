@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "637158676834-slgqn6ijmj2jn32d79dooqphvbtlqdrg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.victo.salarymanagement",
+            "certificate_hash": "01443F5DD502675A2FD3CC4FA56454AEF066E86A"
+          }
+        },
+        {
+          "client_id": "637158676834-jdbm1hq4g5s8v1q8l179hie3pqqi7153.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.victo.salarymanagement",
+            "certificate_hash": "162558BD39830C09C5286151D598DFA74F78305A"
+          }
+        },
+        {
           "client_id": "637158676834-tsb95a9nimks55drpff8ij1gee3qpoqq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

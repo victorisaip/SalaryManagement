@@ -105,7 +105,7 @@ public class HomePage extends AppCompatActivity {
         String email = etUserName.getText().toString();
         String password = etPassword.getText().toString();
         signIn(email,password);
-        myManager.getInstance();
+
     }
 
     public void registerUser(View view) {
@@ -113,45 +113,25 @@ public class HomePage extends AppCompatActivity {
         String password = etRegisterPassword.getText().toString();
         String name = etRegisterName.getText().toString();
         if(validateFormRegister()){
+            Log.d(TAG,"Form validated");
             if(checkBusinessRole()){
+                Log.d(TAG,"Business role selected");
                 if(chbEmployee.isChecked()){
-
-                    createAccount(name,email,password,"employee");
-                    signInAfterRegister(email,password);
-                    myManager.getInstance();
-                    myManager.createUser(email,password,name,"employee");
+                    Log.d(TAG,"Employee");
+                    createAccount(email,password);
+                    myManager.getInstance().
+                            createUser(email,password,name,"employee");
 
                 } else {
-                    createAccount(name,email,password,"manager");
+                    Log.d(TAG,"Manager");
+                    createAccount(email,password);
+                    myManager.getInstance().
+                            createUser(email,password,name,"manager");
 
                 }
             }
         }
     }
-
-
-    private void signInAfterRegister(String email,String password){
-        Log.d(TAG,"Sign in");
-
-            Log.d(TAG,"Entered SignIn");
-            mAuth.signInWithEmailAndPassword(email,password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                            clearWindowLogIn();
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
-                                Log.w(TAG, "signInWithEmail", task.getException());
-                                Toast.makeText(HomePage.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
-        }
 
     private void signIn(String email,String password){
         Log.d(TAG,"Sign in");
@@ -253,8 +233,8 @@ public class HomePage extends AppCompatActivity {
         return valid;
     }
 
-    private void createAccount(String name, String email, String password, String businessRole){
-        if(validateFormRegister()){
+    private void createAccount(String email, String password){
+        Log.d(TAG, "Before mAuth ");
             mAuth.createUserWithEmailAndPassword(email,password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -271,7 +251,6 @@ public class HomePage extends AppCompatActivity {
                             }
                         }
                     });
-        }
 
     }
     public void logOut(View view) {
