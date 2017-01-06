@@ -3,12 +3,16 @@ package com.example.victo.salarymanagement;
 Project name:  Salary Management
 Description: Apps to manage the employment salary according to the total hours worked.
 Developers: Victor , Saul , Ramesh */
+
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -20,13 +24,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class HomePage extends AppCompatActivity {
     //Constants
+
     private static final String TAG = "Authentication" ;
     private static final String KEY= "Credentials";
+
 
     //Authentication attributes
     private FirebaseAuth mAuth;
@@ -37,9 +41,9 @@ public class HomePage extends AppCompatActivity {
     DatabaseManager myManager;
 
     //Layout attributes
-    TextView tvUserName,tvPassword,tvRegisterName,tvRegisterEmail,tvRegisterPassword,tvBusinessRole;
-    EditText etUserName, etPassword,etRegisterName,etRegisterEmail,etRegisterPassword;
-    CheckBox chbManager,chbEmployee;
+    TextView tvUserName, tvPassword, tvRegisterName, tvRegisterEmail, tvRegisterPassword, tvBusinessRole;
+    EditText etUserName, etPassword, etRegisterName, etRegisterEmail, etRegisterPassword;
+    CheckBox chbManager, chbEmployee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +80,7 @@ public class HomePage extends AppCompatActivity {
                     //Sign in is succeed
                     String email = user.getEmail();
 
-                    Toast.makeText(HomePage.this, "Succesfully signed in by: "+email, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomePage.this, "Succesfully signed in by: " + email, Toast.LENGTH_SHORT).show();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -89,7 +93,7 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG,"On Start");
+        Log.d(TAG, "On Start");
         mAuth.addAuthStateListener(mAuthListener);
     }
 
@@ -103,10 +107,10 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void logIn(View view) {
-        Log.d(TAG,"LogIn");
+        Log.d(TAG, "LogIn");
         String email = etUserName.getText().toString();
         String password = etPassword.getText().toString();
-        signIn(email,password);
+        signIn(email, password);
 
     }
 
@@ -114,32 +118,32 @@ public class HomePage extends AppCompatActivity {
         String email = etRegisterEmail.getText().toString();
         String password = etRegisterPassword.getText().toString();
         String name = etRegisterName.getText().toString();
-        if(validateFormRegister()){
-            Log.d(TAG,"Form validated");
-            if(checkBusinessRole()){
-                Log.d(TAG,"Business role selected");
-                if(chbEmployee.isChecked()){
-                    Log.d(TAG,"Employee");
-                    createAccount(email,password);
+        if (validateFormRegister()) {
+            Log.d(TAG, "Form validated");
+            if (checkBusinessRole()) {
+                Log.d(TAG, "Business role selected");
+                if (chbEmployee.isChecked()) {
+                    Log.d(TAG, "Employee");
+                    createAccount(email, password);
                     myManager.getInstance().
-                            createUser(email,password,name,"employee");
+                            createUser(email, password, name, "employee");
 
                 } else {
-                    Log.d(TAG,"Manager");
-                    createAccount(email,password);
+                    Log.d(TAG, "Manager");
+                    createAccount(email, password);
                     myManager.getInstance().
-                            createUser(email,password,name,"manager");
+                            createUser(email, password, name, "manager");
 
                 }
             }
         }
     }
 
-    private void signIn(String email,String password){
-        Log.d(TAG,"Sign in");
-        if(validateFormLogIn()){
-            Log.d(TAG,"Entered SignIn");
-            mAuth.signInWithEmailAndPassword(email,password)
+    private void signIn(String email, String password) {
+        Log.d(TAG, "Sign in");
+        if (validateFormLogIn()) {
+            Log.d(TAG, "Entered SignIn");
+            mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -160,13 +164,13 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
-    private void signOut(){
+    private void signOut() {
         mAuth.signOut();
     }
 
-    private boolean checkBusinessRole(){
+    private boolean checkBusinessRole() {
         boolean valid = true;
-        if(!chbEmployee.isChecked() && !chbManager.isChecked()){
+        if (!chbEmployee.isChecked() && !chbManager.isChecked()) {
             Toast.makeText(this, "You have to select your business role", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
@@ -174,7 +178,7 @@ public class HomePage extends AppCompatActivity {
             chbManager.setError(null);
         }
 
-        if(chbManager.isChecked() && chbEmployee.isChecked()){
+        if (chbManager.isChecked() && chbEmployee.isChecked()) {
             Toast.makeText(this, "You can not have both business roles", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
@@ -185,20 +189,19 @@ public class HomePage extends AppCompatActivity {
     }
 
 
-
-    private boolean validateFormLogIn(){
+    private boolean validateFormLogIn() {
         boolean valid = true;
         String email = etUserName.getText().toString();
         String password = etPassword.getText().toString();
 
-        if(TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             etUserName.setError("Required");
             valid = false;
         } else {
             etUserName.setError(null);
         }
 
-        if(TextUtils.isEmpty(password)){
+        if (TextUtils.isEmpty(password)) {
             etPassword.setError("Required");
             valid = false;
         } else {
@@ -208,10 +211,10 @@ public class HomePage extends AppCompatActivity {
         return valid;
     }
 
-    private boolean validateFormRegister(){
+    private boolean validateFormRegister() {
         boolean valid = true;
         String email = etRegisterEmail.getText().toString();
-        if(TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             etRegisterEmail.setError("Required");
             valid = false;
         } else {
@@ -219,7 +222,7 @@ public class HomePage extends AppCompatActivity {
         }
 
         String password = etRegisterPassword.getText().toString();
-        if(TextUtils.isEmpty(password)){
+        if (TextUtils.isEmpty(password)) {
             etRegisterPassword.setError("Required");
             valid = false;
         } else {
@@ -227,7 +230,7 @@ public class HomePage extends AppCompatActivity {
         }
 
         String name = etRegisterName.getText().toString();
-        if(TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             etRegisterName.setError("Required");
             valid = false;
         } else {
@@ -236,40 +239,72 @@ public class HomePage extends AppCompatActivity {
         return valid;
     }
 
-    private void createAccount(String email, String password){
+    private void createAccount(String email, String password) {
         Log.d(TAG, "Before mAuth ");
-            mAuth.createUserWithEmailAndPassword(email,password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                            clearWindowRegister();
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(HomePage.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                        clearWindowRegister();
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(HomePage.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }
+                });
 
     }
+
     public void logOut(View view) {
         signOut();
     }
 
-    private void clearWindowLogIn(){
+    private void clearWindowLogIn() {
         etUserName.setText("");
         etPassword.setText("");
     }
 
-    private void clearWindowRegister(){
+    private void clearWindowRegister() {
         etRegisterName.setText("");
         etRegisterPassword.setText("");
         etRegisterEmail.setText("");
         chbEmployee.setChecked(false);
         chbManager.setChecked(false);
+    }
+
+    //Menu creation with 2 option
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.action_logout:
+                signOut();
+                Toast.makeText(HomePage.this, "Logged Out", Toast.LENGTH_SHORT).show();
+            break;
+
+            case R.id.action_help:
+                Toast.makeText(HomePage.this, "Help: work in progress", Toast.LENGTH_SHORT).show();
+            break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }
