@@ -1,9 +1,8 @@
 package com.example.victo.salarymanagement;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.example.victo.salarymanagement.POJOs.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -68,7 +67,7 @@ public class DatabaseManager {
 
 
 
-    protected static DatabaseManager getInstance(){
+    public static DatabaseManager getInstance(){
         if(dbManager==null){
             Log.d(TAG, "Get instance, Enters");
             dbManager = new DatabaseManager();

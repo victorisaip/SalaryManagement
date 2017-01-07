@@ -4,12 +4,9 @@ Project name:  Salary Management
 Description: Apps to manage the employment salary according to the total hours worked.
 Developers: Victor , Saul , Ramesh */
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,11 +17,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.victo.salarymanagement.Fragments.LogInFragment;
+import com.example.victo.salarymanagement.Fragments.SignUpFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,24 +28,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomePage extends AppCompatActivity {
-    //Constants
-
-    private static final String TAG = "Authentication" ;
-    private static final String KEY= "Credentials";
-
-
-    //Authentication attributes
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseUser user;
-
-    //Database Instance
-    DatabaseManager myManager;
-
-    //Layout attributes
-    TextView tvUserName, tvPassword, tvRegisterName, tvRegisterEmail, tvRegisterPassword, tvBusinessRole;
-    EditText etUserName, etPassword, etRegisterName, etRegisterEmail, etRegisterPassword;
-    CheckBox chbManager, chbEmployee;
+    private static final String TAG = "Home page";
+    //Fragments
+    SignUpFragment signUpFragment;
+    LogInFragment logInFragment;
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -60,274 +42,19 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        //Fragments
+        logInFragment = new LogInFragment();
+        signUpFragment = new SignUpFragment();
 
         //Layout Elements
-        tvUserName = (TextView) findViewById(R.id.tvUserName);
-        tvPassword = (TextView) findViewById(R.id.tvPassword);
-        tvRegisterName = (TextView) findViewById(R.id.tvName);
-        tvRegisterEmail = (TextView) findViewById(R.id.tvRegisterEmail);
-        tvRegisterPassword = (TextView) findViewById(R.id.tvRegisterPassword);
-        tvBusinessRole = (TextView) findViewById(R.id.tvRegisterBusinessRole);
-        etUserName = (EditText) findViewById(R.id.eTuserName);
-        etPassword = (EditText) findViewById(R.id.eTpassword);
-        etRegisterName = (EditText) findViewById(R.id.eTName);
-        etRegisterEmail = (EditText) findViewById(R.id.eTregisterEmail);
-        etRegisterPassword = (EditText) findViewById(R.id.eTRegisterPassword);
-        chbManager = (CheckBox) findViewById(R.id.chbManager);
-        chbEmployee = (CheckBox) findViewById(R.id.chbEmployee);
         toolbar = (Toolbar) findViewById(R.id.my_tool_bar);
         setSupportActionBar(toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_logIn);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragments(new LogInFragment(),"Log in");
-        viewPagerAdapter.addFragments(new SignUpFragment(),"Sign up");
+        viewPagerAdapter.addFragments(logInFragment,"Log in");
+        viewPagerAdapter.addFragments(signUpFragment,"Sign up");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-        //Authentication
-        mAuth = FirebaseAuth.getInstance();
-        user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
-                    //Sign in is succeed
-                    String email = user.getEmail();
-
-                    Toast.makeText(HomePage.this, "Succesfully signed in by: " + email, Toast.LENGTH_SHORT).show();
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
-
-
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "On Start");
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            signOut();
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-    public void logIn(View view) {
-        Log.d(TAG, "LogIn");
-        String email = etUserName.getText().toString();
-        String password = etPassword.getText().toString();
-        signIn(email, password);
-
-    }
-
-    public void registerUser(View view) {
-        String email = etRegisterEmail.getText().toString();
-        String password = etRegisterPassword.getText().toString();
-        String name = etRegisterName.getText().toString();
-        if (validateFormRegister()) {
-            Log.d(TAG, "Form validated");
-            if (checkBusinessRole()) {
-                Log.d(TAG, "Business role selected");
-                if (chbEmployee.isChecked()) {
-                    Log.d(TAG, "Employee");
-                    createAccount(email, password);
-                    myManager.getInstance().
-                            createUser(email, password, name, "employee");
-
-                } else {
-                    Log.d(TAG, "Manager");
-                    createAccount(email, password);
-                    myManager.getInstance().
-                            createUser(email, password, name, "manager");
-
-                }
-            }
-        }
-    }
-
-    private void signIn(String email, String password) {
-        Log.d(TAG, "Sign in");
-        if (validateFormLogIn()) {
-            Log.d(TAG, "Entered SignIn");
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                            clearWindowLogIn();
-                            if(task.isSuccessful()){
-                                Intent myIntent = new Intent(HomePage.this,MainMenuForEmployees.class);
-                                myIntent.putExtra(KEY,"email");
-                                startActivity(myIntent);
-                            } else {
-                                Log.w(TAG, "signInWithEmail", task.getException());
-                                Toast.makeText(HomePage.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
-        }
-    }
-
-    private void signOut() {
-        mAuth.signOut();
-    }
-
-    private boolean checkBusinessRole() {
-        boolean valid = true;
-        if (!chbEmployee.isChecked() && !chbManager.isChecked()) {
-            Toast.makeText(this, "You have to select your business role", Toast.LENGTH_SHORT).show();
-            valid = false;
-        } else {
-            chbEmployee.setError(null);
-            chbManager.setError(null);
-        }
-
-        if (chbManager.isChecked() && chbEmployee.isChecked()) {
-            Toast.makeText(this, "You can not have both business roles", Toast.LENGTH_SHORT).show();
-            valid = false;
-        } else {
-            chbEmployee.setError(null);
-            chbManager.setError(null);
-        }
-        return valid;
-    }
-
-
-    private boolean validateFormLogIn() {
-        boolean valid = true;
-        String email = etUserName.getText().toString();
-        String password = etPassword.getText().toString();
-
-        if (TextUtils.isEmpty(email)) {
-            etUserName.setError("Required");
-            valid = false;
-        } else {
-            etUserName.setError(null);
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Required");
-            valid = false;
-        } else {
-            etPassword.setError(null);
-        }
-
-        return valid;
-    }
-
-    private boolean validateFormRegister() {
-        boolean valid = true;
-        String email = etRegisterEmail.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            etRegisterEmail.setError("Required");
-            valid = false;
-        } else {
-            etRegisterEmail.setError(null);
-        }
-
-        String password = etRegisterPassword.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            etRegisterPassword.setError("Required");
-            valid = false;
-        } else {
-            etRegisterPassword.setError(null);
-        }
-
-        String name = etRegisterName.getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            etRegisterName.setError("Required");
-            valid = false;
-        } else {
-            etRegisterName.setError(null);
-        }
-        return valid;
-    }
-
-    private void createAccount(String email, String password) {
-        Log.d(TAG, "Before mAuth ");
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        clearWindowRegister();
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(HomePage.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-    }
-
-    public void logOut(View view) {
-        signOut();
-    }
-
-    private void clearWindowLogIn() {
-        etUserName.setText("");
-        etPassword.setText("");
-    }
-
-    private void clearWindowRegister() {
-        etRegisterName.setText("");
-        etRegisterPassword.setText("");
-        etRegisterEmail.setText("");
-        chbEmployee.setChecked(false);
-        chbManager.setChecked(false);
-    }
-
-    //Menu creation with 2 option
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-
-        inflater.inflate(R.menu.menu, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.action_logout:
-                signOut();
-                Toast.makeText(HomePage.this, "Logged Out", Toast.LENGTH_SHORT).show();
-            break;
-
-            case R.id.action_help:
-                Toast.makeText(HomePage.this, "Help: work in progress", Toast.LENGTH_SHORT).show();
-            break;
-        }
-
-
-        return super.onOptionsItemSelected(item);
     }
 }
