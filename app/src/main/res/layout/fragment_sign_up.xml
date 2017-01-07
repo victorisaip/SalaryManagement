@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.victo.salarymanagement.SignUpFragment">
+    tools:context="com.example.victo.salarymanagement.Fragments.SignUpFragment">
 
     <TextView
         android:id="@+id/tvLabelRegisterUser"

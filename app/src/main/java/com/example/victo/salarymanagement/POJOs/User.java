@@ -1,4 +1,4 @@
-package com.example.victo.salarymanagement;
+package com.example.victo.salarymanagement.POJOs;
 
 /**
  * Created by victo on 1/1/2017.
