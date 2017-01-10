@@ -5,7 +5,7 @@
     android:id="@+id/activity_home_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.victo.salarymanagement.HomePage"
+    tools:context="com.example.victo.salarymanagement.Activities.HomePage"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout

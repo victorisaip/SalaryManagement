@@ -4,12 +4,8 @@
     android:id="@+id/activity_register_time_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.victo.salarymanagement.RegisterTimeSheet">
+    tools:context="com.example.victo.salarymanagement.Activities.RegisterTimeSheet">
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,57 +14,22 @@
         android:text="Start date:"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="date"
-        android:ems="10"
-        android:id="@+id/etStartDate"/>
+        android:id="@+id/etStartDate"
+        android:enabled="false"/>
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvEndDate"
-        android:text="Start date:"/>
+        android:id="@+id/btnTypeDate"
+        android:text="Type Date"/>
 
-    <EditText
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:enabled="false"
-        android:ems="10"
-        android:id="@+id/etEndDate"/>
+        android:id="@+id/frRegisterTimeSheet">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvApproveer"
-        android:text="Approver:"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etApprover"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvNumberOfHours"
-        android:text="Number of hours:"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etNumberOfHours"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvStatus"
-        android:text="Status:"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:id="@+id/etStatus"/>
+    </FrameLayout>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.victo.salarymanagement;
+package com.example.victo.salarymanagement.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

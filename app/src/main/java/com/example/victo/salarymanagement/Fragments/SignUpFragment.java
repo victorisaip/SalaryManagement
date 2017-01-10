@@ -15,16 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.victo.salarymanagement.DatabaseManager;
-import com.example.victo.salarymanagement.HomePage;
+import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.concurrent.Executor;
 
 
 /**
