@@ -17,8 +17,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.DatePicker;
 
+import com.example.victo.salarymanagement.Interfaces.IComm;
 import com.example.victo.salarymanagement.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -79,12 +81,23 @@ public class DatePickerFragment extends DialogFragment {
     }
 
     private void sendResult (int resultCode, Date date){
-        if(getTargetFragment()==null){
+        /*if(getTargetFragment()==null){
             return;
         }
         Intent intent = new Intent();
         intent.putExtra(EXTRA_DATE, date);
-        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode,intent);
+        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode,intent);*/
+
+
+        SimpleDateFormat dt1 = new SimpleDateFormat("MM-dd-yyyy");
+        String receivedResult = dt1.format(date);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 4);
+        String endDate = dt1.format(c.getTime());
+        IComm iComm = (IComm) getActivity();
+        iComm.setTextTo(receivedResult);
+        iComm.setEndDate(endDate);
     }
 
     @Override

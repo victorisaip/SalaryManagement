@@ -185,7 +185,7 @@ public class SignUpFragment extends Fragment {
     private void createAccount(String email, String password) {
         Log.d(TAG, "Before mAuth ");
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
@@ -200,8 +200,6 @@ public class SignUpFragment extends Fragment {
                 });
 
     }
-
-
 
     private void clearWindowRegister() {
         etRegisterName.setText("");

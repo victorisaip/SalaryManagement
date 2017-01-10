@@ -25,23 +25,23 @@ public class DatabaseManager {
     //Firebase attributes
     private FirebaseDatabase database;
     private static DatabaseReference myRef;
-    private static DatabaseReference myRef2;
-    private static DatabaseReference myRef3;
+    private static DatabaseReference myRefusers;
+    private static DatabaseReference myRefTimesheets;
 
     //Constructor
     private DatabaseManager(){
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Salary_Management_DB");
-        myRef2 = myRef.child("Users");
-        myRef3 = myRef.child("Timesheets");
+        myRefusers = myRef.child("Users");
+        myRefTimesheets = myRef.child("Timesheets");
         users = new ArrayList<>();
         timesheets = new ArrayList<>();
 
         Log.d(TAG, "DatabaseManager created successfully");
         Log.d(TAG, "===========================================");
         //Listening for any change in the users
-        myRef2.addValueEventListener(new ValueEventListener() {
+        myRefusers.addValueEventListener(new ValueEventListener() {
             String[] arr = new String[6];
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -63,7 +63,7 @@ public class DatabaseManager {
         });
 
         //Listening for timesheets
-        myRef3.addValueEventListener(new ValueEventListener() {
+        myRefTimesheets.addValueEventListener(new ValueEventListener() {
             String[] arr = new String[6];
 
             @Override
@@ -105,14 +105,14 @@ public class DatabaseManager {
     public void createUser(String email, String password,String name,String businessRole){
         Log.d(TAG, "Creating user....");
         User myUser = new User(email,password,name,businessRole);
-        myRef2.child("Users").push().setValue(myUser);
+        myRefusers.push().setValue(myUser);
         Log.d(TAG, "User created");
         Log.d(TAG, "===========================================");
     }
 
     public void createTimeSheet(String startDate,String approver,String numHours,String endDate){
         Timesheet myTimeSheet = new Timesheet(startDate,approver,numHours,endDate);
-        myRef3.child("Timesheets").push().setValue(myTimeSheet);
+        myRefTimesheets.push().setValue(myTimeSheet);
         Log.d(TAG, "Timesheet created");
         Log.d(TAG, "===========================================");
 
