@@ -1,7 +1,6 @@
 package com.example.victo.salarymanagement.Fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,9 +8,6 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,8 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.victo.salarymanagement.HomePage;
-import com.example.victo.salarymanagement.MainMenuForEmployees;
+import com.example.victo.salarymanagement.Activities.MainMenuForEmployees;
 import com.example.victo.salarymanagement.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,17 +23,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.concurrent.Executor;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LogInFragment extends Fragment {
+    //TAGS
     private static final String TAG = "Authentication" ;
     private static final String KEY= "Credentials";
 
-    TextView tvUserName, tvPassword;
+    //Layout variables
     EditText etUserName, etPassword;
     Button btnLogin;
 
@@ -56,9 +50,8 @@ public class LogInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_log_in,container,false);
+
         // Inflate the layout for this fragment
-        tvUserName = (TextView) view.findViewById(R.id.tvUserName);
-        tvPassword = (TextView) view.findViewById(R.id.tvPassword);
         etUserName = (EditText) view.findViewById(R.id.eTuserName);
         etPassword = (EditText) view.findViewById(R.id.eTpassword);
         btnLogin = (Button) view.findViewById(R.id.btnLogIn);
@@ -66,15 +59,14 @@ public class LogInFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "LogIn");
+
                 String email = etUserName.getText().toString();
                 String password = etPassword.getText().toString();
+                Log.d(TAG, "Logging in with email: "+email);
+                Log.d(TAG, "Logging in with password: "+password);
                 signIn(email, password);
             }
         });
-
-
-
         //Authentication
         mAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -101,19 +93,15 @@ public class LogInFragment extends Fragment {
         return view;
     }
 
-
-
-
     private void signIn(String email, String password) {
         Log.d(TAG, "Sign in");
         if (validateFormLogIn()) {
             Log.d(TAG, "Entered SignIn");
             mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                            clearWindowLogIn();
+                            Log.d(TAG, "onComplete: "+task.toString());
                             if(task.isSuccessful()){
                                 Intent myIntent = new Intent(getContext(),MainMenuForEmployees.class);
                                 myIntent.putExtra(KEY,"email");
@@ -153,10 +141,6 @@ public class LogInFragment extends Fragment {
         etUserName.setText("");
         etPassword.setText("");
     }
-
-
-
-
     @Override
     public void onStart() {
         super.onStart();

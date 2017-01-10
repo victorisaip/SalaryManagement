@@ -14,12 +14,16 @@ public class Timesheet {
     private String numberOfHours;
     private Date actualDate;
 
-    public Timesheet(String startDate, String approver, String status, String numberOfHours) {
+    public Timesheet(){
+
+    }
+
+    public Timesheet(String startDate, String approver, String numberOfHours,String endDate) {
         this.startDate = startDate;
-        endDate = startDate;
+        this.endDate = endDate;
         actualDate = new Date();
         this.approver = approver;
-        this.status = status;
+        this.status = "registered";
         this.numberOfHours = numberOfHours;
     }
 

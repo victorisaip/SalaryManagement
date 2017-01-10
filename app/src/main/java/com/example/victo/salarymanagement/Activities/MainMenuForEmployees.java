@@ -1,9 +1,11 @@
-package com.example.victo.salarymanagement;
+package com.example.victo.salarymanagement.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.victo.salarymanagement.R;
 
 public class MainMenuForEmployees extends AppCompatActivity {
 
