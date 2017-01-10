@@ -7,8 +7,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import java.util.Calendar;
+import java.util.Date;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,10 +29,10 @@ public class RegisterTimesheetFragment extends Fragment {
 
 
 
+
     public RegisterTimesheetFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +57,4 @@ public class RegisterTimesheetFragment extends Fragment {
 
         return view;
     }
-
-
-
 }

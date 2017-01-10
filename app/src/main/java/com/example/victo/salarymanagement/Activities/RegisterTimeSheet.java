@@ -3,6 +3,7 @@ package com.example.victo.salarymanagement.Activities;
 
 import android.app.DatePickerDialog;
 import android.support.v4.app.FragmentManager;
+
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,9 +20,12 @@ import com.example.victo.salarymanagement.Fragments.TimesheetsFragment;
 import com.example.victo.salarymanagement.R;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class RegisterTimeSheet extends AppCompatActivity {
     static final String TAG = "Register Timesheet";
+    private static final String DIALOG_DATE = "DialogDate";
+    private static final int REQUEST_DATE = 0;
     RegisterTimesheetFragment registerTimesheetFragment;
     TimesheetsFragment timesheetsFragment;
     FragmentManager fm;
@@ -35,8 +39,6 @@ public class RegisterTimeSheet extends AppCompatActivity {
 
         Log.d(TAG, "Setting content ");
         setContentView(R.layout.activity_register_time_sheet);
-
-
         startDate = (EditText) findViewById(R.id.etStartDate);
 
 
@@ -61,32 +63,11 @@ public class RegisterTimeSheet extends AppCompatActivity {
     }
 
     public void showDatePicker(){
-        Log.d(TAG, "showDatePicker: initiated");
-        DatePickerFragment date = new DatePickerFragment();
-        Log.d(TAG, "showDatePicker: initiated");
-        Calendar c = Calendar.getInstance();
-        Log.d(TAG, "showDatePicker: initiated");
-        Bundle args = new Bundle();
-        Log.d(TAG, "showDatePicker: initiated");
-
-        args.putInt("year",c.get(Calendar.YEAR));
-        Log.d(TAG, "showDatePicker: initiated");
-        args.putInt("month",c.get(Calendar.MONTH));
-        Log.d(TAG, "showDatePicker: initiated");
-        args.putInt("day",c.get(Calendar.DAY_OF_MONTH));
-        Log.d(TAG, "showDatePicker: arguments");
-        date.setArguments(args);
-        Log.d(TAG, "showDatePicker: showDialog");
-        date.show(getSupportFragmentManager(),"Date Picker");
-        Log.d(TAG, "showDatePicker: getSupportManager");
+        FragmentManager manager = getSupportFragmentManager();
+        Date date = new Date();
+        DatePickerFragment dialog = DatePickerFragment.newInstance(date);
+        dialog.show(manager, DIALOG_DATE);
 
     }
 
-    DatePickerDialog.OnDateSetListener onDate = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            Toast.makeText(RegisterTimeSheet.this, String.valueOf(year)+"-"+String.valueOf(month)
-                    +"-"+String.valueOf(dayOfMonth), Toast.LENGTH_SHORT).show();
-        }
-    };
 }

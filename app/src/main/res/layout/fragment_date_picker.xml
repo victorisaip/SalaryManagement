@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.victo.salarymanagement.Fragments.DatePickerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <DatePicker
+        android:id="@+id/dialog_date_date_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"/>
 
 </FrameLayout>
