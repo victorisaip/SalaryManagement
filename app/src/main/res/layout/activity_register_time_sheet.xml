@@ -7,24 +7,7 @@
     android:orientation="vertical"
     tools:context="com.example.victo.salarymanagement.Activities.RegisterTimeSheet">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvStartDate"
-        android:text="Start date:"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:id="@+id/etStartDate"
-        android:enabled="false"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnTypeDate"
-        android:text="Type Date"/>
 
     <FrameLayout
         android:layout_width="match_parent"
