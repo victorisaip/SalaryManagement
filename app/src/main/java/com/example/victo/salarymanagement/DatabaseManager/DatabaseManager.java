@@ -110,8 +110,10 @@ public class DatabaseManager {
         Log.d(TAG, "===========================================");
     }
 
-    public void createTimeSheet(String startDate,String approver,String numHours,String endDate){
-        Timesheet myTimeSheet = new Timesheet(startDate,approver,numHours,endDate);
+    public void createTimeSheet(String startDate,String endDate,String approver,String actualDate,
+                                String monday,String tuesday,String wednesday,String thursday,String friday,String totalHours){
+        Timesheet myTimeSheet = new Timesheet(startDate,endDate,approver,actualDate,monday,
+                tuesday,wednesday,thursday,friday,totalHours);
         myRefTimesheets.push().setValue(myTimeSheet);
         Log.d(TAG, "Timesheet created");
         Log.d(TAG, "===========================================");

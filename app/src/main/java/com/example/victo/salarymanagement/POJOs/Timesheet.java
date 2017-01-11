@@ -11,20 +11,31 @@ public class Timesheet {
     private String endDate;
     private String approver;
     private String status;
-    private String numberOfHours;
-    private Date actualDate;
+    private String Monday;
+    private String Friday;
+    private String Tuesday;
+    private String Wednesday;
+    private String Thursday;
+    private String actualDate;
+    private String totalHours;
 
     public Timesheet(){
 
     }
 
-    public Timesheet(String startDate, String approver, String numberOfHours,String endDate) {
+    public Timesheet(String startDate,String endDate,String approver,String actualDate,
+    String Monday,String Tuesday,String Wednesday,String Thursday,String Friday,String totalHours) {
         this.startDate = startDate;
         this.endDate = endDate;
-        actualDate = new Date();
+        this.actualDate = actualDate;
         this.approver = approver;
+        this.Monday = Monday;
+        this.Tuesday = Tuesday;
+        this.Wednesday = Wednesday;
+        this.Thursday = Thursday;
+        this.Friday = Friday;
+        this.totalHours = totalHours;
         this.status = "registered";
-        this.numberOfHours = numberOfHours;
     }
 
     public String getStartDate() {
@@ -58,20 +69,52 @@ public class Timesheet {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    public String getNumberOfHours() {
-        return numberOfHours;
+    public String getMonday() {
+        return Monday;
     }
 
-    public void setNumberOfHours(String numberOfHours) {
-        this.numberOfHours = numberOfHours;
+    public void setMonday(String monday) {
+        Monday = monday;
     }
 
-    public Date getActualDate() {
+    public String getFriday() {
+        return Friday;
+    }
+
+    public void setFriday(String friday) {
+        Friday = friday;
+    }
+
+    public String getTuesday() {
+        return Tuesday;
+    }
+
+    public void setTuesday(String tuesday) {
+        Tuesday = tuesday;
+    }
+
+    public String getWednesday() {
+        return Wednesday;
+    }
+
+    public void setWednesday(String wednesday) {
+        Wednesday = wednesday;
+    }
+
+    public String getThursday() {
+        return Thursday;
+    }
+
+    public void setThursday(String thursday) {
+        Thursday = thursday;
+    }
+
+
+    public String getActualDate() {
         return actualDate;
     }
 
-    public void setActualDate(Date actualDate) {
+    public void setActualDate(String actualDate) {
         this.actualDate = actualDate;
     }
 
@@ -82,7 +125,6 @@ public class Timesheet {
                 ", endDate='" + endDate + '\'' +
                 ", approver='" + approver + '\'' +
                 ", status='" + status + '\'' +
-                ", numberOfHours='" + numberOfHours + '\'' +
                 ", actualDate=" + actualDate +
                 '}';
     }
