@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">SalaryManagement</string>
+    <string name="app_name">Salary Management System</string>
+    <string name="title_activity_main_menu_for_employees">Main menu</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="date_picker_title">Start date</string>
+
 </resources>
