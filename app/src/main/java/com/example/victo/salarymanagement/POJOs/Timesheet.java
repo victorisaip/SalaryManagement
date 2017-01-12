@@ -1,12 +1,15 @@
 package com.example.victo.salarymanagement.POJOs;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by victo on 1/6/2017.
  */
 
-public class Timesheet {
+public class Timesheet implements Serializable{
     private String startDate;
     private String endDate;
     private String approver;
@@ -20,7 +23,6 @@ public class Timesheet {
     private String totalHours;
 
     public Timesheet(){
-
     }
 
     public Timesheet(String startDate,String endDate,String approver,String actualDate,
@@ -36,6 +38,14 @@ public class Timesheet {
         this.Friday = Friday;
         this.totalHours = totalHours;
         this.status = "registered";
+    }
+
+    public String getTotalHours() {
+        return totalHours;
+    }
+
+    public void setTotalHours(String totalHours) {
+        this.totalHours = totalHours;
     }
 
     public String getStartDate() {

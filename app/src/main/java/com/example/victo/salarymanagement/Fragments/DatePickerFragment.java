@@ -81,14 +81,6 @@ public class DatePickerFragment extends DialogFragment {
     }
 
     private void sendResult (int resultCode, Date date){
-        /*if(getTargetFragment()==null){
-            return;
-        }
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_DATE, date);
-        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode,intent);*/
-
-
         SimpleDateFormat dt1 = new SimpleDateFormat("MM-dd-yyyy");
         String receivedResult = dt1.format(date);
         Calendar c = Calendar.getInstance();

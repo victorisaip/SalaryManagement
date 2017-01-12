@@ -38,6 +38,7 @@ public class RegisterTimeSheet extends AppCompatActivity implements IComm{
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         ft.add(R.id.frRegisterTimeSheet,registerTimesheetFragment);
+        ft.add(R.id.frTimeSheets,timesheetsFragment);
         ft.commit();
     }
     @Override

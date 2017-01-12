@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".Activities.MainMenuForEmployees" />
         <activity android:name=".Activities.MenuForManagers" />
-        <activity android:name=".Activities.RegisterTimeSheet"></activity>
+        <activity android:name=".Activities.RegisterTimeSheet" />
+        <activity android:name=".Activities.SeeTimeSheetHistoryActivity"></activity>
     </application>
 
 </manifest>

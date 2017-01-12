@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,9 +28,10 @@ import com.example.victo.salarymanagement.R;
  * A simple {@link Fragment} subclass.
  */
 public class RegisterTimesheetFragment extends Fragment {
+    private static final String TAG = "RegisterTM";
     //Layout variables
     Button btnRegisterTimesheet;
-    EditText startDate, etEndDate, etApprover, etStatus, etMonday, etTuesday, etWednesday, etThursday, etFriday,etTotalHours;
+    EditText startDate, etEndDate, etApprover, etStatus, etMonday, etTuesday, etWednesday, etThursday, etFriday,etTotalHours,etActualDate;
     DatePickerFragment dialog;
     String mstartDate, mEndDate, mApprover, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours;
     double hoursMonday, hoursTuesday, hoursWednesday, hoursThursday, hoursFriday;
@@ -50,7 +52,7 @@ public class RegisterTimesheetFragment extends Fragment {
         etEndDate = (EditText) view.findViewById(R.id.etEndDate);
         etApprover = (EditText) view.findViewById(R.id.etApprover);
         startDate = (EditText) view.findViewById(R.id.etStartDate);
-        etStatus.setText("created");
+        etStatus = (EditText) view.findViewById(R.id.etStatus);
         etTotalHours = (EditText) view.findViewById(R.id.etNumberOfHours);
         btnRegisterTimesheet = (Button) view.findViewById(R.id.btnRegisterTimeSheet);
         etMonday = (EditText) view.findViewById(R.id.etMonday);
@@ -58,22 +60,7 @@ public class RegisterTimesheetFragment extends Fragment {
         etWednesday = (EditText) view.findViewById(R.id.etWednesday);
         etThursday = (EditText) view.findViewById(R.id.etThursday);
         etFriday = (EditText) view.findViewById(R.id.etFriday);
-
-        /*
-        mstartDate = startDate.getText().toString();
-        mEndDate = etEndDate.getText().toString();
-        mApprover = etApprover.getText().toString();
-        mMonday = etMonday.getText().toString();
-        mTuesday = etTuesday.getText().toString();
-        mWednesday = etWednesday.getText().toString();
-        mThursday = etThursday.getText().toString();
-        mFriday = etFriday.getText().toString();
-        hoursMonday = Double.parseDouble(mMonday);
-        hoursTuesday = Double.parseDouble(mThursday);
-        hoursWednesday = Double.parseDouble(mWednesday);
-        hoursThursday = Double.parseDouble(mThursday);
-        hoursFriday = Double.parseDouble(mFriday);
-        */
+        etActualDate = (EditText) view.findViewById(R.id.etActualDate);
 
         mstartDate = startDate.getText().toString();
         mEndDate = etEndDate.getText().toString();
@@ -84,23 +71,36 @@ public class RegisterTimesheetFragment extends Fragment {
         etThursday.setText("0.0");
         etFriday.setText("0.0");
         etTotalHours.setText("0.0");
-        hoursTuesday = Double.parseDouble(mThursday);
-        hoursWednesday = Double.parseDouble(mWednesday);
-        hoursThursday = Double.parseDouble(mThursday);
-        hoursFriday = Double.parseDouble(mFriday);
+        etStatus.setText("created");
+        mMonday = etMonday.getText().toString();
+        mTuesday = etTuesday.getText().toString();
+        mWednesday = etWednesday.getText().toString();
+        mThursday = etThursday.getText().toString();
+        mFriday = etFriday.getText().toString();
+
 
         Date actualDate = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(actualDate);
-        final String parsedActualDate = c.get(Calendar.MONTH) + "-" + c.get(Calendar.DAY_OF_MONTH) + "-" + c.get(Calendar.YEAR);
+        SimpleDateFormat dt1 = new SimpleDateFormat("MM-dd-yyyy");
+        final String receivedResult = dt1.format(actualDate);
 
+        etActualDate.setText(receivedResult);
         btnRegisterTimesheet.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Log.d("Onclick et: ", startDate.getText().toString() + "\n\n" + etEndDate.getText().toString());
+
+                mstartDate = startDate.getText().toString();
+                mEndDate = etEndDate.getText().toString();
+                mApprover = etApprover.getText().toString();
+                mMonday = etMonday.getText().toString();
+                mTuesday = etTuesday.getText().toString();
+                mWednesday = etWednesday.getText().toString();
+                mThursday = etThursday.getText().toString();
+                mFriday = etFriday.getText().toString();
+                mTotalHours = etTotalHours.getText().toString();
+
                 DatabaseManager.getInstance().createTimeSheet(mstartDate, mEndDate,
-                        mApprover, parsedActualDate, mMonday, mTuesday, mWednesday, mThursday, mFriday,etTotalHours.getText().toString());
+                        mApprover, receivedResult, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours);
             }
         });
 
@@ -115,6 +115,67 @@ public class RegisterTimesheetFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 
+                if(!hasFocus){
+                    if(etMonday.getText().toString().equals("")){
+                        etMonday.setText("0.0");
+                    }
+                    sumHoursWeek();
+                    etTotalHours.setText(String.valueOf(finalSum));
+                }
+
+            }
+        });
+
+        etTuesday.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(etTuesday.getText().toString().equals("")){
+                        etTuesday.setText("0.0");
+                    }
+                    sumHoursWeek();
+                    etTotalHours.setText(String.valueOf(finalSum));
+                }
+
+            }
+        });
+
+        etWednesday.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(etWednesday.getText().toString().equals("")){
+                        etWednesday.setText("0.0");
+                    }
+                    sumHoursWeek();
+                    etTotalHours.setText(String.valueOf(finalSum));
+                }
+            }
+        });
+
+        etThursday.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(etThursday.getText().toString().equals("")){
+                        etThursday.setText("0.0");
+                    }
+                    sumHoursWeek();
+                    etTotalHours.setText(String.valueOf(finalSum));
+                }
+            }
+        });
+
+        etFriday.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(etFriday.getText().toString().equals("")){
+                        etFriday.setText("0.0");
+                    }
+                    sumHoursWeek();
+                    etTotalHours.setText(String.valueOf(finalSum));
+                }
             }
         });
 
@@ -136,30 +197,20 @@ public class RegisterTimesheetFragment extends Fragment {
         startDate.setText(text);
     }
 
-    public double sumHoursMonday() {
+    public void sumHoursWeek() {
+        mMonday = etMonday.getText().toString();
+        mTuesday = etTuesday.getText().toString();
+        mWednesday = etWednesday.getText().toString();
+        mThursday = etThursday.getText().toString();
+        mFriday = etFriday.getText().toString();
+
+        finalSum = 0;
         hoursMonday = Double.parseDouble(mMonday);
-        finalSum = finalSum + hoursMonday;
-        return finalSum;
-    }
-    public double sumHoursTuesday() {
-        hoursMonday = Double.parseDouble(mMonday);
-        finalSum = finalSum + hoursMonday;
-        return finalSum;
-    }
-    public double sumHoursWednesday() {
-        hoursMonday = Double.parseDouble(mMonday);
-        finalSum = finalSum + hoursMonday;
-        return finalSum;
-    }
-    public double sumHoursThursday() {
-        hoursMonday = Double.parseDouble(mMonday);
-        finalSum = finalSum + hoursMonday;
-        return finalSum;
-    }
-    public double sumHoursFriday() {
-        hoursMonday = Double.parseDouble(mMonday);
-        finalSum = finalSum + hoursMonday;
-        return finalSum;
+        hoursTuesday = Double.parseDouble(mTuesday);
+        hoursWednesday = Double.parseDouble(mWednesday);
+        hoursThursday = Double.parseDouble(mThursday);
+        hoursFriday = Double.parseDouble(mFriday);
+        finalSum = finalSum + hoursMonday+hoursTuesday+hoursWednesday+hoursThursday+hoursFriday;
     }
 
 }
