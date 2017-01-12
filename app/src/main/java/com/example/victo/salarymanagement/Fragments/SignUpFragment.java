@@ -64,13 +64,8 @@ public class SignUpFragment extends Fragment {
         etRegisterPassword = (EditText) view.findViewById(R.id.eTRegisterPassword);
         chbManager = (CheckBox) view.findViewById(R.id.chbManager);
         chbEmployee = (CheckBox) view.findViewById(R.id.chbEmployee);
-        btnLogOut = (Button) view.findViewById(R.id.btnLogOut);
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
+
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
