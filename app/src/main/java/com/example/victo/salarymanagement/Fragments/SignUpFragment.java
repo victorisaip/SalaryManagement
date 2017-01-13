@@ -82,6 +82,7 @@ public class SignUpFragment extends Fragment {
                             myManager.getInstance().
                                     createUser(email, password, name, "employee");
 
+
                         } else {
                             Log.d(TAG, "Manager");
                             createAccount(email, password);
@@ -185,6 +186,7 @@ public class SignUpFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+
                         } else {
                             Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                             Toast.makeText(getContext(), "Authentication failed.",

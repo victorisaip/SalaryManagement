@@ -16,12 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.victo.salarymanagement.Activities.MainMenuForEmployees;
+import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
+import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 
 /**
@@ -103,6 +107,9 @@ public class LogInFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             Log.d(TAG, "onComplete: "+task.toString());
                             if(task.isSuccessful()){
+                                String loggedInUser = mAuth.getCurrentUser().getEmail();
+
+
                                 Intent myIntent = new Intent(getContext(),MainMenuForEmployees.class);
                                 myIntent.putExtra(KEY,"email");
                                 startActivity(myIntent);
@@ -115,6 +122,15 @@ public class LogInFragment extends Fragment {
 
         }
     }
+    /*
+    public int getBusinessRoleFromUser (String email){
+        ArrayList<User> myUsers = new ArrayList<>();
+        myUsers = DatabaseManager.getInstance().getUsers();
+        for (int i = 0; i < myUsers.size(); i++) {
+
+        }
+
+    }*/
     private boolean validateFormLogIn() {
         boolean valid = true;
         String email = etUserName.getText().toString();

@@ -22,6 +22,8 @@ import android.widget.EditText;
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
@@ -37,7 +39,7 @@ public class RegisterTimesheetFragment extends Fragment {
     double hoursMonday, hoursTuesday, hoursWednesday, hoursThursday, hoursFriday;
     double finalSum = 0;
     private static final String DIALOG_DATE = "DialogDate";
-
+    String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
     public RegisterTimesheetFragment() {
         // Required empty public constructor
@@ -100,7 +102,7 @@ public class RegisterTimesheetFragment extends Fragment {
                 mTotalHours = etTotalHours.getText().toString();
 
                 DatabaseManager.getInstance().createTimeSheet(mstartDate, mEndDate,
-                        mApprover, receivedResult, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours);
+                        mApprover, receivedResult, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours,email);
             }
         });
 
