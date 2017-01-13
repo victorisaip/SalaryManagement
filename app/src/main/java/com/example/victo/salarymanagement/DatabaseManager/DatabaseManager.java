@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.victo.salarymanagement.POJOs.Timesheet;
 import com.example.victo.salarymanagement.POJOs.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +24,7 @@ public class DatabaseManager {
     private static DatabaseManager dbManager;
     private static ArrayList<User> users;
     public static ArrayList<Timesheet> timesheets;
+    private String emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
     //Firebase attributes
     private FirebaseDatabase database;
@@ -75,11 +78,13 @@ public class DatabaseManager {
                 Log.d(TAG, "===========================================");
                 Log.d(TAG, "onDataChange: " + dataSnapshot.getChildrenCount());
                 Log.d(TAG, "===========================================");
-
+                timesheets = new ArrayList<Timesheet>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Timesheet post = postSnapshot.getValue(Timesheet.class);
-                    timesheets.add(post);
 
+                    Timesheet post = postSnapshot.getValue(Timesheet.class);
+                    if(post.getEmail().equals(emailUser)){
+                        timesheets.add(post);
+                    }
                     Log.d(TAG, "Approver: " + post.getApprover());
                 }
                 Log.d(TAG, "Timesheets" + timesheets);
@@ -115,10 +120,10 @@ public class DatabaseManager {
     }
 
     public void createTimeSheet(String startDate,String endDate,String approver,String actualDate,
-                                String monday,String tuesday,String wednesday,String thursday,String friday,String totalHours){
+                                String monday,String tuesday,String wednesday,String thursday,String friday,String totalHours,String email){
         Log.d(TAG, "Total hours " + totalHours);
         Timesheet myTimeSheet = new Timesheet(startDate,endDate,approver,actualDate,monday,
-                tuesday,wednesday,thursday,friday,totalHours);
+                tuesday,wednesday,thursday,friday,totalHours,email);
         myRefTimesheets.push().setValue(myTimeSheet);
         Log.d(TAG, "Timesheet created");
         Log.d(TAG, "===========================================");
