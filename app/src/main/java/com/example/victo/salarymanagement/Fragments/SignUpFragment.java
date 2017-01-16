@@ -65,6 +65,7 @@ public class SignUpFragment extends Fragment {
         chbManager = (CheckBox) view.findViewById(R.id.chbManager);
         chbEmployee = (CheckBox) view.findViewById(R.id.chbEmployee);
 
+
         //Authentication
         mAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -88,6 +89,7 @@ public class SignUpFragment extends Fragment {
                 }
             }
         };
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
