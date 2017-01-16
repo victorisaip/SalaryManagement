@@ -10,18 +10,24 @@ import android.widget.TextView;
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.POJOs.Timesheet;
 import com.example.victo.salarymanagement.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class MainMenuForEmployees extends AppCompatActivity {
 
     private static final String TAG = "STATUS";
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_for_employees);
         Log.d(TAG, "onCreate: ");
         ArrayList<Timesheet> timesheets = DatabaseManager.getInstance().timesheets;
+
     }
 
     @Override
@@ -46,12 +52,14 @@ public class MainMenuForEmployees extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop: ");
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy: ");
+        mAuth.signOut();
     }
 
     public void registerTimeSheet(View view) {
@@ -60,9 +68,7 @@ public class MainMenuForEmployees extends AppCompatActivity {
     }
 
     public void seeHistory(View view) {
-
         Intent i = new Intent(this,SeeTimeSheetHistoryActivity.class);
-
         startActivity(i);
     }
 }

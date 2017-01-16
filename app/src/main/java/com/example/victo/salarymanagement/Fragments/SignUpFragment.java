@@ -33,7 +33,7 @@ public class SignUpFragment extends Fragment {
     TextView tvRegisterName, tvRegisterEmail, tvRegisterPassword, tvBusinessRole;
     EditText etRegisterName, etRegisterEmail, etRegisterPassword;
     CheckBox chbManager, chbEmployee;
-    Button btnLogOut;
+
 
     Button btnRegister;
     //Database Instance
@@ -66,6 +66,30 @@ public class SignUpFragment extends Fragment {
         chbEmployee = (CheckBox) view.findViewById(R.id.chbEmployee);
 
 
+        //Authentication
+        mAuth = FirebaseAuth.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    //Sign in is succeed
+                    String email = user.getEmail();
+
+                    //Toast.makeText(LogInFragment.this, "Succesfully signed in by: " + email, Toast.LENGTH_SHORT).show();
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,35 +119,9 @@ public class SignUpFragment extends Fragment {
             }
         });
 
-        //Authentication
-        mAuth = FirebaseAuth.getInstance();
-        user = FirebaseAuth.getInstance().getCurrentUser();
 
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
-                    //Sign in is succeed
-                    String email = user.getEmail();
-
-                    //Toast.makeText(LogInFragment.this, "Succesfully signed in by: " + email, Toast.LENGTH_SHORT).show();
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
 
         return view ;
-    }
-
-    private void signOut() {
-        mAuth.signOut();
     }
 
 

@@ -50,7 +50,7 @@ public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.Li
         View view = inflater.inflate(R.layout.fragment_timesheets, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_timesheets);
         timesheetsAdapter = new TimesheetsAdapter(DatabaseManager.getInstance().timesheets,getActivity(),this);
-        //timesheetsAdapter.notifyDataSetChanged();
+        timesheetsAdapter.notifyDataSetChanged();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -65,7 +65,6 @@ public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.Li
         Timesheet timesheet = new Timesheet();
         timesheet = timesheetArrayList.get(clickedItemIndex);
         TimesheetComm timesheetComm = (TimesheetComm) getActivity();
-
         timesheetComm.setTextToTimeSheet("Approver: " + timesheet.getApprover() + "\n" +
         "Actual date: "+ timesheet.getActualDate()+ "\n" +
         "Start date: "+ timesheet.getStartDate() + "\n" +
