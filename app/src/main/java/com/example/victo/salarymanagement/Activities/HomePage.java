@@ -10,12 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.Fragments.LogInFragment;
 import com.example.victo.salarymanagement.Fragments.SignUpFragment;
 import com.example.victo.salarymanagement.R;
 import com.example.victo.salarymanagement.Adapters.ViewPagerAdapter;
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity{
     private static final String TAG = "Home page";
     //Fragments
     SignUpFragment signUpFragment;
@@ -24,6 +25,8 @@ public class HomePage extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
+    DatabaseManager myManager;
+    boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,5 +47,9 @@ public class HomePage extends AppCompatActivity {
         viewPagerAdapter.addFragments(signUpFragment,"Sign up");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+
     }
+
+
 }

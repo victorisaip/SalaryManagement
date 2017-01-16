@@ -1,5 +1,6 @@
 package com.example.victo.salarymanagement.DatabaseManager;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.victo.salarymanagement.POJOs.Timesheet;
@@ -22,15 +23,18 @@ public class DatabaseManager {
 
     private static final String TAG ="Database" ;
     private static DatabaseManager dbManager;
-    private static ArrayList<User> users;
+    public static ArrayList<User> users;
+    public static ArrayList<User> employees;
+    public static ArrayList<User> managers;
     public static ArrayList<Timesheet> timesheets;
-    private String emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
+    private static String emailUser;
+    private static String businessRole;
     //Firebase attributes
     private FirebaseDatabase database;
-    private static DatabaseReference myRef;
-    private static DatabaseReference myRefusers;
-    private static DatabaseReference myRefTimesheets;
+    private  DatabaseReference myRef;
+    //References to the database
+    public static DatabaseReference myRefusers;
+    private  static DatabaseReference myRefTimesheets;
 
     //Constructor
     private DatabaseManager(){
@@ -41,36 +45,38 @@ public class DatabaseManager {
         myRefTimesheets = myRef.child("Timesheets");
         users = new ArrayList<>();
         timesheets = new ArrayList<>();
-
-
+        employees = new ArrayList<>();
+        managers = new ArrayList<>();
         Log.d(TAG, "DatabaseManager created successfully");
         Log.d(TAG, "===========================================");
-        //Listening for any change in the users
-        myRefusers.addValueEventListener(new ValueEventListener() {
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            emailUser = "";
+        } else {
+            emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        }
+        setListenerUsers();
+        setListenerTimesheets();
+    }
+    /*
+    Method for getting an instance of our Database Manager
+     */
+    public static DatabaseManager getInstance(){
+        if(dbManager==null){
+            Log.d(TAG, "Getting instance");
+            dbManager = new DatabaseManager();
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "Listening for registered users " + dataSnapshot.getChildrenCount());
-                Log.d(TAG, "===========================================");
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    User post = postSnapshot.getValue(User.class);
-                    users.add(post);
-                    Log.d(TAG, "Email : " + post.getEmail()+", Name: "+post.getName());
-                }
-                Log.d(TAG, "The User " + users);
-                Log.d(TAG, "===========================================");
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: "+ "operation with error!");
-                Log.d(TAG, "===========================================");
-            }
-        });
+        }
 
+
+        Log.d(TAG, "getInstance: "+dbManager.myRef.getKey().toString());
+        Log.d(TAG, "===========================================");
+
+        return dbManager;
+    }
+
+    private static void setListenerTimesheets(){
         //Listening for timesheets
         myRefTimesheets.addValueEventListener(new ValueEventListener() {
-
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -98,17 +104,40 @@ public class DatabaseManager {
             }
         });
     }
-    /*
-    Method for getting an instance of our Database Manager
-     */
-    public static DatabaseManager getInstance(){
-        if(dbManager==null){
-            Log.d(TAG, "Getting instance");
-            dbManager = new DatabaseManager();
-        }
-        Log.d(TAG, "getInstance: "+dbManager.myRef.getKey().toString());
-        Log.d(TAG, "===========================================");
-        return dbManager;
+
+    private static void setListenerUsers(){
+        //Listening for any change in the users
+        myRefusers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "Listening for registered users " + dataSnapshot.getChildrenCount());
+                Log.d(TAG, "===========================================");
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    User post = postSnapshot.getValue(User.class);
+                    if(emailUser.equals(post.getEmail())){
+                        String businessRoleReceived = post.getBusinessRole();
+                        businessRole = businessRoleReceived;
+                        Log.d(TAG, "Business Role: "+businessRole);
+                    }
+                    users.add(post);
+                    Log.d(TAG, "Email : " + post.getEmail()+", Name: "+post.getName());
+                    if(post.getBusinessRole().equals("employee")){
+                        employees.add(post);
+                    } else {
+                        if(post.getBusinessRole().equals("manager")){
+                            managers.add(post);
+                        }
+                    }
+                }
+                Log.d(TAG, "The User " + users);
+                Log.d(TAG, "===========================================");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: "+ "operation with error!");
+                Log.d(TAG, "===========================================");
+            }
+        });
     }
 
     public void createUser(String email, String password,String name,String businessRole){
@@ -136,5 +165,9 @@ public class DatabaseManager {
 
     public static ArrayList<User> getUsers() {
         return users;
+    }
+
+    public String getBusinessRole() {
+        return businessRole;
     }
 }
