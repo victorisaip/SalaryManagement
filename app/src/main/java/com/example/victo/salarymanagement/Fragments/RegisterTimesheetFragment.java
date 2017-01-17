@@ -1,29 +1,29 @@
+
+
 package com.example.victo.salarymanagement.Fragments;
 
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
+import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -33,8 +33,9 @@ public class RegisterTimesheetFragment extends Fragment {
     private static final String TAG = "RegisterTM";
     //Layout variables
     Button btnRegisterTimesheet;
-    EditText startDate, etEndDate, etApprover, etStatus, etMonday, etTuesday, etWednesday, etThursday, etFriday,etTotalHours,etActualDate;
+    EditText startDate, etEndDate, etStatus, etMonday, etTuesday, etWednesday, etThursday, etFriday,etTotalHours,etActualDate;
     DatePickerFragment dialog;
+    Spinner spApprover;
     String mstartDate, mEndDate, mApprover, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours;
     double hoursMonday, hoursTuesday, hoursWednesday, hoursThursday, hoursFriday;
     double finalSum = 0;
@@ -52,7 +53,7 @@ public class RegisterTimesheetFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register_timesheet, container, false);
 
         etEndDate = (EditText) view.findViewById(R.id.etEndDate);
-        etApprover = (EditText) view.findViewById(R.id.etApprover);
+
         startDate = (EditText) view.findViewById(R.id.etStartDate);
         etStatus = (EditText) view.findViewById(R.id.etStatus);
         etTotalHours = (EditText) view.findViewById(R.id.etNumberOfHours);
@@ -63,10 +64,11 @@ public class RegisterTimesheetFragment extends Fragment {
         etThursday = (EditText) view.findViewById(R.id.etThursday);
         etFriday = (EditText) view.findViewById(R.id.etFriday);
         etActualDate = (EditText) view.findViewById(R.id.etActualDate);
+        spApprover = (Spinner)view.findViewById(R.id.SpinSelectApprover);
 
         mstartDate = startDate.getText().toString();
         mEndDate = etEndDate.getText().toString();
-        mApprover = etApprover.getText().toString();
+       // mApprover = etApprover.getText().toString();
         etMonday.setText("0.0");
         etTuesday.setText("0.0");
         etWednesday.setText("0.0");
@@ -91,9 +93,18 @@ public class RegisterTimesheetFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                Log.d("Ramesh","OnClick Listners");
+                Toast.makeText(getContext(),
+                        "OnClickListener : " +
+
+                                "\nYour Approver "+ String.valueOf(spApprover.getSelectedItem()),
+                        Toast.LENGTH_SHORT).show();
+
+                String mangerFromSpinner = String.valueOf(spApprover.getSelectedItem());
+
                 mstartDate = startDate.getText().toString();
                 mEndDate = etEndDate.getText().toString();
-                mApprover = etApprover.getText().toString();
+               /// mApprover = etApprover.getText().toString();
                 mMonday = etMonday.getText().toString();
                 mTuesday = etTuesday.getText().toString();
                 mWednesday = etWednesday.getText().toString();
@@ -102,7 +113,13 @@ public class RegisterTimesheetFragment extends Fragment {
                 mTotalHours = etTotalHours.getText().toString();
 
                 DatabaseManager.getInstance().createTimeSheet(mstartDate, mEndDate,
-                        mApprover, receivedResult, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours,email);
+                        mangerFromSpinner, receivedResult, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours,email);
+
+
+
+
+
+
             }
         });
 
@@ -180,8 +197,29 @@ public class RegisterTimesheetFragment extends Fragment {
                 }
             }
         });
-
+       addApprovers();
         return view;
+    }
+    /*
+    * Adding approvers to the list in Register Time sheet fragment*/
+    public void addApprovers() {
+        ArrayList<String> list = new ArrayList<>();
+
+        ArrayList<User> myMangers = DatabaseManager.getInstance().managers;
+        for (User manger:myMangers) {
+            String name = manger.getName();
+            list.add(name);
+            Log.d("\nRamesh",name);
+        }
+        Log.d("Ramesh", "Approvers List will be Here");
+
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, list);
+       dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spApprover.setAdapter(dataAdapter);
+        Log.d("Ramesh","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+spApprover.getTextAlignment());
+
+
     }
 
     public void setEtEndDate(String text) {
