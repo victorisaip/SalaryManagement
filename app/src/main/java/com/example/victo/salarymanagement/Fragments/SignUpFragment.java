@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ public class SignUpFragment extends Fragment {
     //Layout attributes
     TextView tvRegisterName, tvRegisterEmail, tvRegisterPassword, tvBusinessRole;
     EditText etRegisterName, etRegisterEmail, etRegisterPassword;
-    CheckBox chbManager, chbEmployee;
+    RadioButton chbManager, chbEmployee;
 
 
     Button btnRegister;
@@ -55,15 +56,12 @@ public class SignUpFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
         btnRegister = (Button) view.findViewById(R.id.btnRegisterUser);
-        tvRegisterName = (TextView) view.findViewById(R.id.tvName);
-        tvRegisterEmail = (TextView) view.findViewById(R.id.tvRegisterEmail);
-        tvRegisterPassword = (TextView) view.findViewById(R.id.tvRegisterPassword);
         tvBusinessRole = (TextView) view.findViewById(R.id.tvRegisterBusinessRole);
         etRegisterName = (EditText) view.findViewById(R.id.eTName);
         etRegisterEmail = (EditText) view.findViewById(R.id.eTregisterEmail);
         etRegisterPassword = (EditText) view.findViewById(R.id.eTRegisterPassword);
-        chbManager = (CheckBox) view.findViewById(R.id.chbManager);
-        chbEmployee = (CheckBox) view.findViewById(R.id.chbEmployee);
+        chbManager = (RadioButton) view.findViewById(R.id.chbManager);
+        chbEmployee = (RadioButton) view.findViewById(R.id.chbEmployee);
 
 
         //Authentication
