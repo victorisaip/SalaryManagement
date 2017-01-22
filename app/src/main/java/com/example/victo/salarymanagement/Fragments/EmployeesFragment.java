@@ -1,6 +1,7 @@
 package com.example.victo.salarymanagement.Fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +18,9 @@ import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.Interfaces.EmployeeComm;
 import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +30,11 @@ import java.util.List;
  */
 public class EmployeesFragment extends Fragment implements EmployeesAdapter.ListItemClickListener{
     private static final String TAG = "employees";
-    public RecyclerView recyclerView;
-    private EmployeesAdapter employeesAdapter;
+    public static RecyclerView recyclerView;
+    private static EmployeesAdapter employeesAdapter;
+    private static ArrayList<User> myEmployees;
+    private static Context context;
+    private static EmployeesFragment employeesFragment;
 
 
 
@@ -42,13 +49,22 @@ public class EmployeesFragment extends Fragment implements EmployeesAdapter.List
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_employees, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_employees);
-        employeesAdapter = new EmployeesAdapter(DatabaseManager.getInstance().employees,this,getActivity());
+        context = getActivity();
+        employeesFragment = this;
+        setListenerUsers();
+        Log.d(TAG, "Calling add employees");
+        addingEmployees();
+        return view;
+    }
+
+    public static void addingEmployees(){
+        employeesAdapter = new EmployeesAdapter(DatabaseManager.getInstance().employees,employeesFragment,context);
         employeesAdapter.notifyDataSetChanged();
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        Log.d(TAG, "addingEmployees: "+"in");
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(employeesAdapter);
-        return view;
     }
 
     @Override
@@ -75,9 +91,58 @@ public class EmployeesFragment extends Fragment implements EmployeesAdapter.List
 
     }
 
-    public void updateRecyclerView(){
-        employeesAdapter = new EmployeesAdapter(DatabaseManager.getInstance().employees,this,getActivity());
-        employeesAdapter.notifyDataSetChanged();
+    public void updateRecyclerView(String s){
+        int pos = positionEmployee(s);
+        employeesAdapter.removeItem(pos);
+    }
+
+    public int positionEmployee(String email){
+        int i = 0;
+        int pos = 0;
+        boolean flag = false;
+        ArrayList<User> l = new ArrayList<>();
+        l = DatabaseManager.getInstance().employees;
+        while(i<DatabaseManager.getInstance().employees.size() && flag == false){
+
+            if(l.get(pos).getEmail().equals(email)){
+                pos = i;
+                flag = true;
+            } else {
+                i++;
+            }
+        }
+        return pos;
+    }
+
+    public static void setListenerUsers(){
+        //Listening for any change in the users
+        DatabaseManager.getInstance().myRefusers.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                myEmployees = new ArrayList<User>();
+
+
+                Log.d(TAG, "Listening for registered users " + dataSnapshot.getChildrenCount());
+                Log.d(TAG, "===========================================");
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    User post = postSnapshot.getValue(User.class);
+                    if(post.getBusinessRole().equals("employee")){
+                        myEmployees.add(post);
+                    }
+                }
+                Log.d(TAG, "Calling adding employees on dataChange");
+                addingEmployees();
+                Log.d("RameshMangerRecycles",myEmployees.toString());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: "+ "operation with error!");
+                Log.d(TAG, "===========================================");
+            }
+        });
     }
 
 
