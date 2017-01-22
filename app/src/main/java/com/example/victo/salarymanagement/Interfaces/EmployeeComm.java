@@ -6,5 +6,9 @@ package com.example.victo.salarymanagement.Interfaces;
 
 public interface EmployeeComm {
 
+    void setEmployeeInformation(String name, String email, String states, String experienceLevel);
+
+    void onEmployeeDeleted(String employeeEmail);
+
 
 }

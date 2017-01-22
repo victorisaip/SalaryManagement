@@ -46,6 +46,7 @@ public class TimesheetsAdapter extends RecyclerView.Adapter<TimesheetsAdapter.Vi
 
         @Override
         public void onClick(View v) {
+
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
         }
@@ -69,7 +70,6 @@ public class TimesheetsAdapter extends RecyclerView.Adapter<TimesheetsAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.timesheet_row,parent,false);
-
         return new ViewHolder(itemView);
 
     }
@@ -82,7 +82,6 @@ public class TimesheetsAdapter extends RecyclerView.Adapter<TimesheetsAdapter.Vi
         holder.approver.setText(timesheet.getApprover());
         holder.totalHours.setText(timesheet.getTotalHours());
         holder.linearLayout.removeAllViews();
-
         holder.linearLayout.addView(holder.actualDate);
         holder.linearLayout.addView(holder.approver);
         holder.linearLayout.addView(holder.totalHours);

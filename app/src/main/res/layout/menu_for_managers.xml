@@ -13,11 +13,13 @@
         android:onClick="goEmployeeManagement"
         android:id="@+id/btnEmployeeManagement"/>
 
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Report Management"
-        android:onClick="goReportManagement"
-        android:id="@+id/btnReportManagement"/>
+        android:onClick="approveTimesheets"
+        android:text="Approve timesheets"
+        android:id="@+id/btnApproveTimesheets"/>
 
 </LinearLayout>

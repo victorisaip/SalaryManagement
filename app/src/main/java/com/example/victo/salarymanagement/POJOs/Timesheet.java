@@ -10,6 +10,7 @@ import java.util.Date;
  */
 
 public class Timesheet implements Serializable{
+    private String key;
     private String startDate;
     private String endDate;
     private String approver;
@@ -135,6 +136,14 @@ public class Timesheet implements Serializable{
 
     public void setActualDate(String actualDate) {
         this.actualDate = actualDate;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override
