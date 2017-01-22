@@ -2,6 +2,7 @@ package com.example.victo.salarymanagement.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.ViewHolder> {
-
+    private static String TAG = "EmployeeAdapter";
     private List<User> employeesList;
     final private ListItemClickListener mOnClickListener;
     Context context;
@@ -66,10 +67,12 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.View
             linearLayout = (LinearLayout) itemView.findViewById(R.id.employeeInformation);
             tvEmployeeName = (TextView) itemView.findViewById(R.id.tvEmployeeName);
             tvEmployeeMail = (TextView) itemView.findViewById(R.id.tvEmployeeMail);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
+            Log.d(TAG, "onClick: ");
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
         }

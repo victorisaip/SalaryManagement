@@ -24,13 +24,14 @@ public class MenuForManagers extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void goReportManagement(View view) {
-
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         ArrayList<User> users = DatabaseManager.getInstance().employees;
+    }
+
+    public void approveTimesheets(View view) {
+        Intent i = new Intent(getApplicationContext(),ApproveTimesheetsActivity.class);
+        startActivity(i);
     }
 }

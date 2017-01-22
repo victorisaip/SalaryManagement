@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.victo.salarymanagement.Adapters.EmployeesAdapter;
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
+import com.example.victo.salarymanagement.Interfaces.EmployeeComm;
 import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 
@@ -26,7 +28,7 @@ public class EmployeesFragment extends Fragment implements EmployeesAdapter.List
     private static final String TAG = "employees";
     public RecyclerView recyclerView;
     private EmployeesAdapter employeesAdapter;
-    private Toast toast;
+
 
 
     public EmployeesFragment() {
@@ -51,8 +53,32 @@ public class EmployeesFragment extends Fragment implements EmployeesAdapter.List
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-            List<User> userList = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
         userList = employeesAdapter.getEmployeesList();
+        User user = new User();
+        user = userList.get(clickedItemIndex);
+        String expLevel = "";
+        EmployeeComm employeeComm = (EmployeeComm) getActivity();
+        Log.d(TAG, "onListItemClick: "+"before switch");
+        switch (user.getExperienceLevel()){
+            case 0:
+                expLevel = "jr";
+                break;
+            case 1:
+                expLevel = "sr";
+                break;
+            case 2:
+                expLevel = "exp";
+                break;
+        }
+        employeeComm.setEmployeeInformation(user.getName(),user.getEmail(),user.getState(),expLevel);
 
     }
+
+    public void updateRecyclerView(){
+        employeesAdapter = new EmployeesAdapter(DatabaseManager.getInstance().employees,this,getActivity());
+        employeesAdapter.notifyDataSetChanged();
+    }
+
+
 }

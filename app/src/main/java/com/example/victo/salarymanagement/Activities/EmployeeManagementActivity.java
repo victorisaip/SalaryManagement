@@ -9,9 +9,10 @@ import com.example.victo.salarymanagement.Fragments.DetailEmployeeFragment;
 import com.example.victo.salarymanagement.Fragments.DetailTimeSheetFragment;
 import com.example.victo.salarymanagement.Fragments.EmployeesFragment;
 import com.example.victo.salarymanagement.Fragments.TimesheetsFragment;
+import com.example.victo.salarymanagement.Interfaces.EmployeeComm;
 import com.example.victo.salarymanagement.R;
 
-public class EmployeeManagementActivity extends AppCompatActivity {
+public class EmployeeManagementActivity extends AppCompatActivity implements EmployeeComm {
 
     FragmentManager fm;
     FragmentTransaction ft;
@@ -29,5 +30,15 @@ public class EmployeeManagementActivity extends AppCompatActivity {
         ft.add(R.id.fr_employees,employeesFragment);
         ft.add(R.id.fr_detail_employees,detailEmployeesFragment);
         ft.commit();
+    }
+
+    @Override
+    public void setEmployeeInformation(String name, String email, String states, String experienceLevel) {
+        detailEmployeesFragment.setEmployeeInfo(name,email,states,experienceLevel);
+    }
+
+    @Override
+    public void onEmployeeDeleted(String employeeEmail) {
+        employeesFragment.updateRecyclerView();
     }
 }

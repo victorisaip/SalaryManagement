@@ -31,7 +31,9 @@
         <activity
             android:name=".Activities.SeeTimeSheetHistoryActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.EmployeeManagementActivity"></activity>
+        <activity android:name=".Activities.EmployeeManagementActivity" />
+        <activity android:name=".Activities.ReportManagementActivity" />
+        <activity android:name=".Activities.ApproveTimesheetsActivity"></activity>
     </application>
 
 </manifest>
