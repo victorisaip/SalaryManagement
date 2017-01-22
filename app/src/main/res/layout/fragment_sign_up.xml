@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="name"
+        android:hint="Name"
 
         android:textSize="20sp" />
 
@@ -20,7 +20,7 @@
         android:id="@+id/eTregisterEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="email"
+        android:hint="Email"
         android:inputType="textEmailAddress"
         android:textSize="20sp" />
 
@@ -28,38 +28,44 @@
         android:id="@+id/eTRegisterPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"
+        android:hint="Password"
         android:inputType="textPassword" />
 
     <TextView
         android:id="@+id/tvRegisterBusinessRole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Business Role: "
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textSize="20sp" />
 
+
+
     <RadioGroup
         android:id="@+id/radioSex"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/chbManager"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
 
             android:text="@string/manager" />
 
         <RadioButton
             android:id="@+id/chbEmployee"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:checked="true"
             android:text="@string/employee" />
-
     </RadioGroup>
+
 
 
     <LinearLayout
