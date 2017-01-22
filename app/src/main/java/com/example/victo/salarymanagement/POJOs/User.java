@@ -12,6 +12,7 @@ public class User {
     private String businessRole;
     private String state;
     private int attemptsOfLogIn;
+    private int experienceLevel;
 
     public User(String email, String password, String name, String businessRole) {
         this.email = email;
@@ -20,10 +21,19 @@ public class User {
         this.businessRole = businessRole;
         this.state = "active";
         this.attemptsOfLogIn = 0;
+        //0 junior, 1 senior, 2 expert
+        this.experienceLevel = 0;
     }
-
     public User(){
 
+    }
+
+    public int getExperienceLevel() {
+        return experienceLevel;
+    }
+
+    public void setExperienceLevel(int experienceLevel) {
+        this.experienceLevel = experienceLevel;
     }
 
     public String getEmail() {

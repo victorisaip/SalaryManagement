@@ -12,16 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.victo.salarymanagement.Activities.MainMenuForEmployees;
+import com.example.victo.salarymanagement.Activities.MenuForManagers;
+import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -29,18 +35,22 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class LogInFragment extends Fragment {
     //TAGS
-    private static final String TAG = "Authentication" ;
-    private static final String KEY= "Credentials";
+    private static final String TAG = "Authentication";
+    private static final String KEY = "Credentials";
 
     //Layout variables
     EditText etUserName, etPassword;
     Button btnLogin;
-
-
     //Authentication attributes
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseUser user;
+    private FirebaseUser user ;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    public  DatabaseReference myRefusers;
+
+    //Firebase Database
+
 
     public LogInFragment() {
         // Required empty public constructor
@@ -49,12 +59,16 @@ public class LogInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_log_in,container,false);
+        View view = inflater.inflate(R.layout.fragment_log_in, container, false);
 
         // Inflate the layout for this fragment
         etUserName = (EditText) view.findViewById(R.id.eTuserName);
         etPassword = (EditText) view.findViewById(R.id.eTpassword);
         btnLogin = (Button) view.findViewById(R.id.btnLogIn);
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Salary_Management_DB");
+        myRefusers = myRef.child("Users");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +76,8 @@ public class LogInFragment extends Fragment {
 
                 String email = etUserName.getText().toString();
                 String password = etPassword.getText().toString();
-                Log.d(TAG, "Logging in with email: "+email);
-                Log.d(TAG, "Logging in with password: "+password);
                 signIn(email, password);
+
             }
         });
         //Authentication
@@ -75,17 +88,51 @@ public class LogInFragment extends Fragment {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
-                    //Sign in is succeed
                     String email = user.getEmail();
+                    Log.d(TAG, "User email: " + email);
 
-                    //Toast.makeText(LogInFragment.this, "Succesfully signed in by: " + email, Toast.LENGTH_SHORT).show();
+                    myRefusers.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Log.d(TAG, "Listening for registered users " + dataSnapshot.getChildrenCount());
+                            Log.d(TAG, "===========================================");
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                User post = postSnapshot.getValue(User.class);
+
+                                Log.d(TAG, "Email : " + post.getEmail()+", Name: "+post.getName());
+                                if(user.getEmail().equals(post.getEmail())){
+                                    Log.d(TAG, "Business Role: "+post.getBusinessRole());
+                                    if(post.getBusinessRole().equals("manager")){
+                                        myRefusers.removeEventListener(this);
+                                        mAuth.removeAuthStateListener(mAuthListener);
+                                        Intent i = new Intent(getActivity(), MenuForManagers.class);
+                                        startActivity(i);
+                                    } else {
+                                        if(post.getBusinessRole().equals("employee")){
+
+                                            mAuth.removeAuthStateListener(mAuthListener);
+
+                                            Intent i = new Intent(getActivity(),MainMenuForEmployees.class);
+                                            startActivity(i);
+                                        }
+                                    }
+                                }
+                            }
+                            Log.d(TAG, "===========================================");
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.d(TAG, "onCancelled: "+ "operation with error!");
+                            Log.d(TAG, "===========================================");
+                        }
+                    });
+
                 } else {
-                    // User is signed out
+
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
             }
@@ -93,28 +140,28 @@ public class LogInFragment extends Fragment {
         return view;
     }
 
-    private void signIn(String email, String password) {
-        Log.d(TAG, "Sign in");
+    private void signIn(final String email, String password) {
+
+        Log.d(TAG, "Executing sign in method");
+        Log.d(TAG, "========================================");
         if (validateFormLogIn()) {
-            Log.d(TAG, "Entered SignIn");
+
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "onComplete: "+task.toString());
-                            if(task.isSuccessful()){
-                                Intent myIntent = new Intent(getContext(),MainMenuForEmployees.class);
-                                myIntent.putExtra(KEY,"email");
-                                startActivity(myIntent);
-                            } else {
-                                Log.w(TAG, "signInWithEmail", task.getException());
-                                Toast.makeText(getContext(), "Authentication failed.",Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "onComplete: " + task.toString());
+
+                            if(!task.isSuccessful()){
+                                Log.w(TAG, "signInWithEmail");
+                                Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    });
 
+                    });
         }
     }
+
     private boolean validateFormLogIn() {
         boolean valid = true;
         String email = etUserName.getText().toString();
@@ -141,48 +188,34 @@ public class LogInFragment extends Fragment {
         etUserName.setText("");
         etPassword.setText("");
     }
+
     @Override
     public void onStart() {
         super.onStart();
         Log.d(TAG, "On Start");
         mAuth.addAuthStateListener(mAuthListener);
+        mAuth.signOut();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
-
             mAuth.removeAuthStateListener(mAuthListener);
         }
+
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-
-        inflater.inflate(R.menu.menu, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.action_logout:
-                signOut();
-                Toast.makeText(getContext(), "Logged Out", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.action_help:
-                Toast.makeText(getContext(), "Help: work in progress", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
 }

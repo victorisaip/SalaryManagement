@@ -1,74 +1,40 @@
 package com.example.victo.salarymanagement.Activities;
 
-import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.TextView;
 
-import com.example.victo.salarymanagement.Adapters.TimesheetsAdapter;
-import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
-import com.example.victo.salarymanagement.POJOs.Timesheet;
+import com.example.victo.salarymanagement.Fragments.DetailTimeSheetFragment;
+import com.example.victo.salarymanagement.Fragments.TimesheetsFragment;
+import com.example.victo.salarymanagement.Interfaces.TimesheetComm;
 import com.example.victo.salarymanagement.R;
 
-import java.io.InputStream;
-import java.util.ArrayList;
 
-public class SeeTimeSheetHistoryActivity extends AppCompatActivity {
+public class SeeTimeSheetHistoryActivity extends AppCompatActivity implements TimesheetComm {
     private static final String TAG = "STATUS";
-    private static final String TAG2= "SeeActivity";
-    TextView onCreate,onStop;
-    public RecyclerView recyclerView;
-    private TimesheetsAdapter timesheetsAdapter;
+    private static final String TAG2 = "SeeActivity";
 
-    int count =0;
+    FragmentManager fm;
+    FragmentTransaction ft;
+    TimesheetsFragment timeSheetsFragment;
+    DetailTimeSheetFragment detailTimeSheetFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_see_time_sheet_history);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_timesheets);
-
-        timesheetsAdapter = new TimesheetsAdapter(DatabaseManager.getInstance().timesheets,getApplicationContext());
-        timesheetsAdapter.notifyDataSetChanged();
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(timesheetsAdapter);
+        timeSheetsFragment = new TimesheetsFragment();
+        detailTimeSheetFragment = new DetailTimeSheetFragment();
+        fm = getSupportFragmentManager();
+        ft = fm.beginTransaction();
+        ft.add(R.id.frTimeSheets, timeSheetsFragment);
+        ft.add(R.id.frDetailTimeSheet, detailTimeSheetFragment);
+        ft.commit();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
+    public void setTextToTimeSheet(String text) {
+        detailTimeSheetFragment.setMyTextViewTo(text);
     }
 }

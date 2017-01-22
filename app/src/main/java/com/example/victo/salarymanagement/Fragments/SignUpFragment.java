@@ -33,7 +33,7 @@ public class SignUpFragment extends Fragment {
     TextView tvRegisterName, tvRegisterEmail, tvRegisterPassword, tvBusinessRole;
     EditText etRegisterName, etRegisterEmail, etRegisterPassword;
     CheckBox chbManager, chbEmployee;
-    Button btnLogOut;
+
 
     Button btnRegister;
     //Database Instance
@@ -64,40 +64,7 @@ public class SignUpFragment extends Fragment {
         etRegisterPassword = (EditText) view.findViewById(R.id.eTRegisterPassword);
         chbManager = (CheckBox) view.findViewById(R.id.chbManager);
         chbEmployee = (CheckBox) view.findViewById(R.id.chbEmployee);
-        btnLogOut = (Button) view.findViewById(R.id.btnLogOut);
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = etRegisterEmail.getText().toString();
-                String password = etRegisterPassword.getText().toString();
-                String name = etRegisterName.getText().toString();
-                if (validateFormRegister()) {
-                    Log.d(TAG, "Form validated");
-                    if (checkBusinessRole()) {
-                        Log.d(TAG, "Business role selected");
-                        if (chbEmployee.isChecked()) {
-                            Log.d(TAG, "Employee");
-                            createAccount(email, password);
-                            myManager.getInstance().
-                                    createUser(email, password, name, "employee");
 
-                        } else {
-                            Log.d(TAG, "Manager");
-                            createAccount(email, password);
-                            myManager.getInstance().
-                                    createUser(email, password, name, "manager");
-
-                        }
-                    }
-                }
-            }
-        });
 
         //Authentication
         mAuth = FirebaseAuth.getInstance();
@@ -123,11 +90,38 @@ public class SignUpFragment extends Fragment {
             }
         };
 
-        return view ;
-    }
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = etRegisterEmail.getText().toString();
+                String password = etRegisterPassword.getText().toString();
+                String name = etRegisterName.getText().toString();
+                if (validateFormRegister()) {
+                    Log.d(TAG, "Form validated");
+                    if (checkBusinessRole()) {
+                        Log.d(TAG, "Business role selected");
+                        if (chbEmployee.isChecked()) {
+                            Log.d(TAG, "Employee");
+                            createAccount(email, password);
+                            myManager.getInstance().
+                                    createUser(email, password, name, "employee");
 
-    private void signOut() {
-        mAuth.signOut();
+
+                        } else {
+                            Log.d(TAG, "Manager");
+                            createAccount(email, password);
+                            myManager.getInstance().
+                                    createUser(email, password, name, "manager");
+
+                        }
+                    }
+                }
+            }
+        });
+
+
+
+        return view ;
     }
 
 
@@ -190,6 +184,7 @@ public class SignUpFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+
                         } else {
                             Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                             Toast.makeText(getContext(), "Authentication failed.",

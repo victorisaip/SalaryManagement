@@ -10,17 +10,30 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.HomePage">
+        <activity
+            android:name=".Activities.HomePage"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainMenuForEmployees" />
-        <activity android:name=".Activities.MenuForManagers" />
-        <activity android:name=".Activities.RegisterTimeSheet" />
-        <activity android:name=".Activities.SeeTimeSheetHistoryActivity"></activity>
+        <activity
+            android:name=".Activities.MainMenuForEmployees"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.MenuForManagers"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.RegisterTimeSheet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.SeeTimeSheetHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.EmployeeManagementActivity" />
+        <activity android:name=".Activities.ReportManagementActivity" />
+        <activity android:name=".Activities.ApproveTimesheetsActivity"></activity>
     </application>
 
 </manifest>

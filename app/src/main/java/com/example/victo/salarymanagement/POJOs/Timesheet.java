@@ -10,6 +10,7 @@ import java.util.Date;
  */
 
 public class Timesheet implements Serializable{
+    private String key;
     private String startDate;
     private String endDate;
     private String approver;
@@ -21,12 +22,13 @@ public class Timesheet implements Serializable{
     private String Thursday;
     private String actualDate;
     private String totalHours;
+    private String email;
 
     public Timesheet(){
     }
 
     public Timesheet(String startDate,String endDate,String approver,String actualDate,
-    String Monday,String Tuesday,String Wednesday,String Thursday,String Friday,String totalHours) {
+    String Monday,String Tuesday,String Wednesday,String Thursday,String Friday,String totalHours,String email) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.actualDate = actualDate;
@@ -38,6 +40,7 @@ public class Timesheet implements Serializable{
         this.Friday = Friday;
         this.totalHours = totalHours;
         this.status = "registered";
+        this.email = email;
     }
 
     public String getTotalHours() {
@@ -119,6 +122,13 @@ public class Timesheet implements Serializable{
         Thursday = thursday;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getActualDate() {
         return actualDate;
@@ -126,6 +136,14 @@ public class Timesheet implements Serializable{
 
     public void setActualDate(String actualDate) {
         this.actualDate = actualDate;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

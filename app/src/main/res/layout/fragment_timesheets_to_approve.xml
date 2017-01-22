@@ -2,14 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fr_timesheets"
-    tools:context="com.example.victo.salarymanagement.Fragments.TimesheetsFragment">
+    tools:context="com.example.victo.salarymanagement.Fragments.TimesheetsToApproveFragment">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:id="@+id/recycler_view_timesheets">
+        android:id="@+id/recycler_view_timesheets_toApprove">
     </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

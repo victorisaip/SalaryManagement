@@ -7,21 +7,13 @@
     android:orientation="vertical"
     tools:context="com.example.victo.salarymanagement.Activities.RegisterTimeSheet">
 
-
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/frRegisterTimeSheet">
-
     </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/frTimeSheets">
 
-    </FrameLayout>
 
 
 </LinearLayout>
