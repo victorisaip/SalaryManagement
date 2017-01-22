@@ -38,7 +38,7 @@ public class DatabaseManager {
     //References to the database
     public static DatabaseReference myRefReports;
     public static DatabaseReference myRefusers;
-    private  static DatabaseReference myRefTimesheets;
+    public  static DatabaseReference myRefTimesheets;
 
 
     //Constructor
@@ -264,6 +264,8 @@ public class DatabaseManager {
         }
         return key;
     }
+
+
 
     public void createReport(Timesheet t1,Timesheet t2,User employee){
         double numHours = Double.parseDouble(t1.getTotalHours())

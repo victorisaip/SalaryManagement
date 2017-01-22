@@ -6,4 +6,5 @@ package com.example.victo.salarymanagement.Interfaces;
 
 public interface TimesheetComm {
     public void setTextToTimeSheet(String text);
+
 }
