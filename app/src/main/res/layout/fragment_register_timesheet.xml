@@ -65,10 +65,13 @@
             android:layout_height="wrap_content"
             android:text="Approver:" />
 
-        <EditText
-            android:id="@+id/etApprover"
+        <Spinner
+            android:id="@+id/SpinSelectApprover"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
+            android:layout_height="wrap_content"
+
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -222,12 +225,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etActualDate"/>
+
+
             <Button
                 android:id="@+id/btnRegisterTimeSheet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Register timesheet" />
+
+
 
         </LinearLayout>
     </LinearLayout>

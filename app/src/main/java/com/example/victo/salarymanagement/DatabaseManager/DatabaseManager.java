@@ -1,6 +1,5 @@
 package com.example.victo.salarymanagement.DatabaseManager;
 
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -8,7 +7,6 @@ import com.example.victo.salarymanagement.POJOs.Report;
 import com.example.victo.salarymanagement.POJOs.Timesheet;
 import com.example.victo.salarymanagement.POJOs.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
