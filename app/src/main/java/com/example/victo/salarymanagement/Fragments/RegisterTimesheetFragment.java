@@ -3,6 +3,7 @@
 package com.example.victo.salarymanagement.Fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +21,9 @@ import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,12 +39,14 @@ public class RegisterTimesheetFragment extends Fragment {
     Button btnRegisterTimesheet;
     EditText startDate, etEndDate, etStatus, etMonday, etTuesday, etWednesday, etThursday, etFriday,etTotalHours,etActualDate;
     DatePickerFragment dialog;
-    Spinner spApprover;
+    static Spinner spApprover;
     String mstartDate, mEndDate, mApprover, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours;
     double hoursMonday, hoursTuesday, hoursWednesday, hoursThursday, hoursFriday;
     double finalSum = 0;
     private static final String DIALOG_DATE = "DialogDate";
     String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private static ArrayList<User> myManagers;
+    private static Context context;
 
     public RegisterTimesheetFragment() {
         // Required empty public constructor
@@ -51,7 +57,7 @@ public class RegisterTimesheetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register_timesheet, container, false);
-
+        RegisterTimesheetFragment.context = getContext();
         etEndDate = (EditText) view.findViewById(R.id.etEndDate);
 
         startDate = (EditText) view.findViewById(R.id.etStartDate);
@@ -114,11 +120,6 @@ public class RegisterTimesheetFragment extends Fragment {
 
                 DatabaseManager.getInstance().createTimeSheet(mstartDate, mEndDate,
                         mangerFromSpinner, receivedResult, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours,email);
-
-
-
-
-
 
             }
         });
@@ -197,16 +198,16 @@ public class RegisterTimesheetFragment extends Fragment {
                 }
             }
         });
-       addApprovers();
+        setListenerUsers();
+
         return view;
     }
     /*
     * Adding approvers to the list in Register Time sheet fragment*/
-    public void addApprovers() {
+    public static void addApprovers() {
         ArrayList<String> list = new ArrayList<>();
 
-        ArrayList<User> myMangers = DatabaseManager.getInstance().managers;
-        for (User manger:myMangers) {
+        for (User manger:myManagers) {
             String name = manger.getName();
             list.add(name);
             Log.d("\nRamesh",name);
@@ -214,10 +215,10 @@ public class RegisterTimesheetFragment extends Fragment {
         Log.d("Ramesh", "Approvers List will be Here");
 
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, list);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(RegisterTimesheetFragment.context,android.R.layout.simple_list_item_1, list);
        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spApprover.setAdapter(dataAdapter);
-        Log.d("Ramesh","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+spApprover.getTextAlignment());
+        Log.d("Ramesh",""+spApprover.getTextAlignment());
 
 
     }
@@ -251,6 +252,53 @@ public class RegisterTimesheetFragment extends Fragment {
         hoursThursday = Double.parseDouble(mThursday);
         hoursFriday = Double.parseDouble(mFriday);
         finalSum = finalSum + hoursMonday+hoursTuesday+hoursWednesday+hoursThursday+hoursFriday;
+    }
+
+    public void resetScreen(){
+        etMonday.setText("");
+        etTuesday.setText("");
+        etWednesday.setText("");
+        etThursday.setText("");
+        etFriday.setText("");
+        etTotalHours.setText("");
+        etStatus.setText("created");
+    }
+
+    public static void setListenerUsers(){
+
+
+
+        //Listening for any change in the users
+        DatabaseManager.getInstance().myRefusers.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                DatabaseManager.getInstance().users = new ArrayList<>();
+//                DatabaseManager.getInstance().employees = new ArrayList<>();
+
+                myManagers = new ArrayList<User>();
+
+
+                Log.d(TAG, "Listening for registered users " + dataSnapshot.getChildrenCount());
+                Log.d(TAG, "===========================================");
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    User post = postSnapshot.getValue(User.class);
+                    if(post.getBusinessRole().equals("manager")){
+                        myManagers.add(post);
+                    }
+                }
+
+                Log.d("Ramesh",myManagers.toString());
+                addApprovers();
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: "+ "operation with error!");
+                Log.d(TAG, "===========================================");
+            }
+        });
     }
 
 }
