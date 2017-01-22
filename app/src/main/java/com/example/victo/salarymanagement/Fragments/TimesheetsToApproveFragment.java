@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,10 @@ import com.example.victo.salarymanagement.Interfaces.TimesheetApproveIcomm;
 import com.example.victo.salarymanagement.Interfaces.TimesheetComm;
 import com.example.victo.salarymanagement.POJOs.Timesheet;
 import com.example.victo.salarymanagement.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,7 @@ public class TimesheetsToApproveFragment extends Fragment implements TimesheetsA
     public RecyclerView recyclerView;
     private TimesheetsAdapter timesheetsAdapter;
     private Toast mToast;
+    private static ArrayList<Timesheet> timesheets;
 
     public TimesheetsToApproveFragment() {
         // Required empty public constructor
@@ -47,6 +53,7 @@ public class TimesheetsToApproveFragment extends Fragment implements TimesheetsA
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(timesheetsAdapter);
+        setListenerTimesheets();
         return view;
     }
 
@@ -71,5 +78,42 @@ public class TimesheetsToApproveFragment extends Fragment implements TimesheetsA
                 timesheet.getEmail(),
                 timesheet.getTotalHours()
         );
+    }
+
+
+    private static void setListenerTimesheets(){
+        timesheets = new ArrayList<>();
+        final String emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
+        //Listening for timesheets
+        DatabaseManager.getInstance().myRefTimesheets.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.d(TAG, "Listening for timesheets");
+                Log.d(TAG, "===========================================");
+                Log.d(TAG, "onDataChange: " + dataSnapshot.getChildrenCount());
+                Log.d(TAG, "===========================================");
+                timesheets = new ArrayList<Timesheet>();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    Timesheet post = postSnapshot.getValue(Timesheet.class);
+                    String key = postSnapshot.getKey();
+                    post.setKey(key);
+                    if(post.getEmail().equals(emailUser)){
+                        timesheets.add(post);
+                    }
+                    Log.d(TAG, "Approver: " + post.getApprover());
+
+                }
+                Log.d(TAG, "Timesheets" + timesheets);
+                Log.d(TAG, "===========================================");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: "+ "operation with error!");
+                Log.d(TAG, "===========================================");
+            }
+        });
     }
 }
