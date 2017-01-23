@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.victo.salarymanagement.Fragments.DetailEmployeeFragment;
 import com.example.victo.salarymanagement.Fragments.DetailTimeSheetFragment;
@@ -16,7 +17,7 @@ public class EmployeeManagementActivity extends AppCompatActivity implements Emp
 
     FragmentManager fm;
     FragmentTransaction ft;
-    EmployeesFragment employeesFragment;
+    static EmployeesFragment employeesFragment;
     DetailEmployeeFragment detailEmployeesFragment;
 
     @Override
@@ -39,6 +40,8 @@ public class EmployeeManagementActivity extends AppCompatActivity implements Emp
 
     @Override
     public void onEmployeeDeleted(String employeeEmail) {
-        employeesFragment.updateRecyclerView();
+        Log.d("emplyoessInActiviy", "onEmployeeDeleted: "+employeeEmail);
+        employeesFragment.updateRecyclerView(employeeEmail);
+
     }
 }

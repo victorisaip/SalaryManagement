@@ -43,7 +43,7 @@ public class RegisterTimesheetFragment extends Fragment {
     EditText startDate, etEndDate, etStatus, etMonday, etTuesday, etWednesday, etThursday, etFriday,etTotalHours,etActualDate;
     DatePickerFragment dialog;
     static Spinner spApprover;
-    String mstartDate, mEndDate, mApprover, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours;
+    String mstartDate, mEndDate, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours;
     double hoursMonday, hoursTuesday, hoursWednesday, hoursThursday, hoursFriday;
     double finalSum = 0;
     private static final String DIALOG_DATE = "DialogDate";

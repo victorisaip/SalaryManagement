@@ -62,6 +62,7 @@ public class DetailEmployeeFragment extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

@@ -10,5 +10,4 @@ public interface EmployeeComm {
 
     void onEmployeeDeleted(String employeeEmail);
 
-
 }

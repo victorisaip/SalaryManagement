@@ -86,4 +86,9 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.View
     public List<User> getEmployeesList(){
         return this.employeesList;
     }
+
+    public void removeItem(int position) {
+        employeesList.remove(position);
+        notifyItemRemoved(position);
+    }
 }
