@@ -4,6 +4,7 @@ package com.example.victo.salarymanagement.Fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
+import com.example.victo.salarymanagement.POJOs.Email;
 import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +36,7 @@ import java.util.Date;
  * A simple {@link Fragment} subclass.
  */
 public class RegisterTimesheetFragment extends Fragment {
+    Email myemail ;
     private static final String TAG = "RegisterTM";
     //Layout variables
     Button btnRegisterTimesheet;
@@ -47,6 +50,7 @@ public class RegisterTimesheetFragment extends Fragment {
     String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private static ArrayList<User> myManagers;
     private static Context context;
+    Button sendEmailBtn;
 
     public RegisterTimesheetFragment() {
         // Required empty public constructor
@@ -59,6 +63,7 @@ public class RegisterTimesheetFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register_timesheet, container, false);
         RegisterTimesheetFragment.context = getContext();
         etEndDate = (EditText) view.findViewById(R.id.etEndDate);
+        sendEmailBtn = (Button) view.findViewById(R.id.btnSendEmail);
 
         startDate = (EditText) view.findViewById(R.id.etStartDate);
         etStatus = (EditText) view.findViewById(R.id.etStatus);
@@ -120,6 +125,16 @@ public class RegisterTimesheetFragment extends Fragment {
 
                 DatabaseManager.getInstance().createTimeSheet(mstartDate, mEndDate,
                         mangerFromSpinner, receivedResult, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours,email);
+
+                String myemailBody = "Hi "+spApprover.getSelectedItem().toString().split("@")[0]+",\n"+"Please find the Time sheet details for the week"+
+                        " as below : \n\n ___________________________\n"+"Mon : " + mMonday+ "hrs\n"
+                        +"Tue : " + mTuesday+ "hrs\n"+"Wed : " + mWednesday+ "hrs\n"+"Thu : " + mThursday+ "hrs\n"
+                        +"Fri : " + mFriday+ "hrs\n"+"___________________________"+"\n" +
+                        "\t Total Hours for Week is : " + mTotalHours+
+                        "" +
+                        "\n\nThanks\n"+email;
+
+            myemail  = new Email(spApprover.getSelectedItem().toString(),"Time Sheet for the current week"+mstartDate ,myemailBody);
 
             }
         });
@@ -200,6 +215,15 @@ public class RegisterTimesheetFragment extends Fragment {
         });
         setListenerUsers();
 
+
+
+  sendEmailBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+          sendEmail();
+      }
+  });
+
         return view;
     }
     /*
@@ -208,7 +232,7 @@ public class RegisterTimesheetFragment extends Fragment {
         ArrayList<String> list = new ArrayList<>();
 
         for (User manger:myManagers) {
-            String name = manger.getName();
+            String name = manger.getEmail();
             list.add(name);
             Log.d("\nRamesh",name);
         }
@@ -300,5 +324,30 @@ public class RegisterTimesheetFragment extends Fragment {
             }
         });
     }
+public void sendEmail()
+{
 
+    if (myemail != null)
+    {
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{myemail.getToEmail()});
+        i.putExtra(Intent.EXTRA_SUBJECT, myemail.getSubject());
+        i.putExtra(Intent.EXTRA_TEXT   , myemail.getBody());
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
+        myemail = null;
+    }
+    else
+    {
+
+        Toast.makeText(getActivity(), "Please Regisgter the Time or You have sent email Just now.", Toast.LENGTH_SHORT).show();
+    }
+
+
+}
 }
