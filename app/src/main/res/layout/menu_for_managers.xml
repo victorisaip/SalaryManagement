@@ -11,30 +11,38 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <include
-            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout"
             android:layout_width="match_parent"
-            layout="@layout/toolbar_layout">
+            android:layout_height="wrap_content">
 
         </include>
-
     </android.support.design.widget.AppBarLayout>
 
 
-    <Button
+    <LinearLayout
+        android:id="@+id/layout_menu_manager"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Employee Management"
-        android:onClick="goEmployeeManagement"
-        android:id="@+id/btnEmployeeManagement"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnEmployeeManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="goEmployeeManagement"
+            android:text="Employee Management" />
 
 
+        <Button
+            android:id="@+id/btnApproveTimesheets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="approveTimesheets"
+            android:text="Approve timesheets" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="approveTimesheets"
-        android:text="Approve timesheets"
-        android:id="@+id/btnApproveTimesheets"/>
-
+    </LinearLayout>
 </LinearLayout>

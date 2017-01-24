@@ -3,11 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
     android:orientation="vertical"
     tools:context="com.example.victo.salarymanagement.Fragments.LogInFragment">
 
+
+
+    <LinearLayout
+        android:id="@+id/layout_menu_employee"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -107,5 +114,6 @@
             android:layout_gravity="center"
             android:onClick="registerUser"
             android:text="Register user" />
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>
