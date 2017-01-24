@@ -95,5 +95,10 @@ public class TimesheetsAdapter extends RecyclerView.Adapter<TimesheetsAdapter.Vi
         return this.timesheetList;
     }
 
+    public void addItem(Timesheet timesheet){
+        timesheetList.add(timesheet);
+        notifyDataSetChanged();
+    }
+
 
 }

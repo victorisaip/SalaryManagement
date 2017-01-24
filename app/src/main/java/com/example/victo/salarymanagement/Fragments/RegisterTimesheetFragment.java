@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.POJOs.Email;
+import com.example.victo.salarymanagement.POJOs.Timesheet;
 import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -126,6 +127,13 @@ public class RegisterTimesheetFragment extends Fragment {
                 DatabaseManager.getInstance().createTimeSheet(mstartDate, mEndDate,
                         mangerFromSpinner, receivedResult, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours,email);
 
+                //Aquí se hace llamado a la interfaz
+
+                Timesheet timesheet = new Timesheet(mstartDate, mEndDate,
+                        mangerFromSpinner, receivedResult, mMonday, mTuesday, mWednesday, mThursday, mFriday,mTotalHours,email);
+
+
+
                 String myemailBody = "Hi "+spApprover.getSelectedItem().toString().split("@")[0]+",\n"+"Please find the Time sheet details for the week"+
                         " as below : \n\n ___________________________\n"+"Mon : " + mMonday+ "hrs\n"
                         +"Tue : " + mTuesday+ "hrs\n"+"Wed : " + mWednesday+ "hrs\n"+"Thu : " + mThursday+ "hrs\n"
@@ -231,7 +239,7 @@ public class RegisterTimesheetFragment extends Fragment {
     public static void addApprovers() {
         ArrayList<String> list = new ArrayList<>();
 
-        for (User manger:myManagers) {
+        for (User manger: myManagers) {
             String name = manger.getEmail();
             list.add(name);
             Log.d("\nRamesh",name);
@@ -298,12 +306,7 @@ public class RegisterTimesheetFragment extends Fragment {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                DatabaseManager.getInstance().users = new ArrayList<>();
-//                DatabaseManager.getInstance().employees = new ArrayList<>();
-
                 myManagers = new ArrayList<User>();
-
-
                 Log.d(TAG, "Listening for registered users " + dataSnapshot.getChildrenCount());
                 Log.d(TAG, "===========================================");
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -326,7 +329,6 @@ public class RegisterTimesheetFragment extends Fragment {
     }
 public void sendEmail()
 {
-
     if (myemail != null)
     {
 

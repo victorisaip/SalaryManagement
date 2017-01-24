@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import com.example.victo.salarymanagement.BroadcastReceivers.MyBroadcastReceiver;
 import com.example.victo.salarymanagement.Fragments.DetailTimeSheetFragment;
 import com.example.victo.salarymanagement.Fragments.TimesheetsFragment;
 import com.example.victo.salarymanagement.Interfaces.TimesheetComm;
@@ -19,7 +19,6 @@ public class SeeTimeSheetHistoryActivity extends AppCompatActivity implements Ti
     private static final String TAG2 = "SeeActivity";
 
     Toolbar toolbar;
-
     FragmentManager fm;
     FragmentTransaction ft;
     TimesheetsFragment timeSheetsFragment;
@@ -47,6 +46,8 @@ public class SeeTimeSheetHistoryActivity extends AppCompatActivity implements Ti
     }
 
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -71,7 +72,6 @@ public class SeeTimeSheetHistoryActivity extends AppCompatActivity implements Ti
                 break;
 
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

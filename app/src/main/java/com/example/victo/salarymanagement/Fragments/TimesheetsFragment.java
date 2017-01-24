@@ -1,7 +1,6 @@
 package com.example.victo.salarymanagement.Fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import com.example.victo.salarymanagement.Adapters.TimesheetsAdapter;
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.Interfaces.TimesheetComm;
 import com.example.victo.salarymanagement.POJOs.Timesheet;
-import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,13 +26,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.victo.salarymanagement.Adapters.TimesheetsAdapter.*;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.ListItemClickListener{
+public class TimesheetsFragment extends Fragment implements ListItemClickListener{
     private static final String TAG = "Timesheets";
     public RecyclerView recyclerView;
     private TimesheetsAdapter timesheetsAdapter;
+    TimesheetsFragment timesheetsFragment;
     private Toast mToast;
     private static ArrayList<Timesheet> timesheets;
 
@@ -62,6 +63,7 @@ public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.Li
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(timesheetsAdapter);
         setListenerTimesheets();
+        timesheetsFragment = this;
         return view;
     }
 
@@ -82,6 +84,7 @@ public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.Li
                 "Hours friday: "+timesheet.getFriday() + "\n" +
         "Total hours: "+timesheet.getTotalHours() );
     }
+
 
     private static void setListenerTimesheets(){
         timesheets = new ArrayList<>();
@@ -118,5 +121,7 @@ public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.Li
             }
         });
     }
+
+
 
 }

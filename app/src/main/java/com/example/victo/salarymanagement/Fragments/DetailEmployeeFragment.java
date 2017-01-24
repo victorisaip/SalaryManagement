@@ -82,6 +82,10 @@ public class DetailEmployeeFragment extends Fragment {
                     Toast.makeText(getActivity(), "Employee Deleted", Toast.LENGTH_SHORT).show();
                     EmployeeComm employeeComm = (EmployeeComm) getActivity();
                     employeeComm.onEmployeeDeleted(email);
+                    etEmpExpLevel.setText("");
+                    etEmpMail.setText("");
+                    etEmpName.setText("");
+                    etEmpStatus.setText("");
                 } else {
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
