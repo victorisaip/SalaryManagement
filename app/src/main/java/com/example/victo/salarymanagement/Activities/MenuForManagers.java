@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.POJOs.User;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 public class MenuForManagers extends AppCompatActivity {
 
     Toolbar toolbar;
+    LinearLayout linearLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,13 @@ public class MenuForManagers extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.my_tool_bar);
         setSupportActionBar(toolbar);
+
+
+
+//        linearLayout = (LinearLayout) findViewById(R.id.layout_menu_manager);
+//        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)linearLayout.getLayoutParams();
+//        params.setMargins(100, 0, 0, 0);
+//        linearLayout.setLayoutParams(params);
 
     }
 

@@ -10,33 +10,34 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <include
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
             layout="@layout/toolbar_layout"
-            >
-        </include>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
 
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/layout_detail_manager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fr_timesheets_to_approve"
-        android:layout_weight="2">
-    </FrameLayout>
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/fr_detail_timesheet_to_approve">
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/fr_timesheets_to_approve"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"></FrameLayout>
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/fr_detail_timesheet_to_approve"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></FrameLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

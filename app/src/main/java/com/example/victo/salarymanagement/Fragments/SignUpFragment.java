@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class SignUpFragment extends Fragment {
     EditText etRegisterName, etRegisterEmail, etRegisterPassword;
     RadioButton chbManager, chbEmployee;
 
+    LinearLayout layout;
+    int sizeInDp;
 
     Button btnRegister;
     //Database Instance
@@ -56,6 +59,17 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        sizeInDp = 8; // Set up left and rigth  padding of 8dps
+
+        layout = (LinearLayout) view.findViewById(R.id.layout_menu_employee);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
+        float scale = getResources().getDisplayMetrics().density;
+        int dpAsPixels = (int) (sizeInDp*scale + 0.5f);
+
+        params.setMargins(dpAsPixels, 0, dpAsPixels, 0);
+        layout.setLayoutParams(params);
+
+
 
         btnRegister = (Button) view.findViewById(R.id.btnRegisterUser);
         tvBusinessRole = (TextView) view.findViewById(R.id.tvRegisterBusinessRole);
