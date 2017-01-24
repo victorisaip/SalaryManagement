@@ -1,6 +1,9 @@
 package com.example.victo.salarymanagement.Fragments;
 
 
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,18 +14,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.victo.salarymanagement.Adapters.EmployeesAdapter;
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.Interfaces.EmployeeComm;
+import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DetailEmployeeFragment extends Fragment {
 
-    TextView tvEmpMail, tvEmpName, tvEmpStatus,tvEmpExpLevel;
+    TextView tvEmpMail, tvEmpName, tvEmpStatus,tvEmpExpLevel,tvEmpInformation;
     EditText etEmpMail, etEmpName, etEmpStatus, etEmpExpLevel;
     Button btnDeleteEmployee, btnUpdateEmployee;
+
 
     public DetailEmployeeFragment() {
         // Required empty public constructor
@@ -34,6 +42,7 @@ public class DetailEmployeeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail_employee, container, false);
+        tvEmpInformation = (TextView) view.findViewById(R.id.tvEmpInformation);
         tvEmpMail = (TextView) view.findViewById(R.id.tvEmpMail);
         tvEmpName = (TextView) view.findViewById(R.id.tvEmpName);
         tvEmpStatus = (TextView) view.findViewById(R.id.tvEmpState);
@@ -45,7 +54,21 @@ public class DetailEmployeeFragment extends Fragment {
         etEmpStatus = (EditText) view.findViewById(R.id.etEmployeeState);
         etEmpExpLevel = (EditText) view.findViewById(R.id.etEmployeeExperience);
 
+        AssetManager assetManager = getActivity().getAssets();
+        Typeface bold = Typeface.createFromAsset(assetManager,"SourceSansPro-Bold.otf");
+        Typeface regular = Typeface.createFromAsset(assetManager,"SourceSansPro-Regular.otf");
+        tvEmpMail.setTypeface(regular);
+        tvEmpName.setTypeface(regular);
+        tvEmpStatus.setTypeface(regular);
+        tvEmpExpLevel.setTypeface(regular);
+        tvEmpInformation.setTypeface(bold);
+        btnDeleteEmployee.setTypeface(regular);
+        btnUpdateEmployee.setTypeface(regular);
 
+        etEmpMail.setTypeface(regular);
+        etEmpName.setTypeface(regular);
+        etEmpStatus.setTypeface(regular);
+        etEmpExpLevel.setTypeface(regular);
         //Deleting an employee
 
         btnDeleteEmployee.setOnClickListener(new View.OnClickListener() {
@@ -80,15 +103,13 @@ public class DetailEmployeeFragment extends Fragment {
                 );
                 if (result){
                     Toast.makeText(getActivity(), "Information updated", Toast.LENGTH_SHORT).show();
-
+                    EmployeeComm employeeComm = (EmployeeComm) getActivity();
+                    employeeComm.onEmployeeUpdated(name,email,state,expLevel);
                 } else {
                     Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
-
         return view;
     }
 
@@ -108,4 +129,6 @@ public class DetailEmployeeFragment extends Fragment {
         etEmpStatus.setVisibility(View.VISIBLE);
         etEmpName.setVisibility(View.VISIBLE);
     }
+
+
 }

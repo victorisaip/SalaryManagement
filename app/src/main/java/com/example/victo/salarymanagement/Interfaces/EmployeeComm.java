@@ -10,4 +10,6 @@ public interface EmployeeComm {
 
     void onEmployeeDeleted(String employeeEmail);
 
+    void onEmployeeUpdated(String name,String email, String status,String experienceLevel);
+
 }
