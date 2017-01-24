@@ -9,6 +9,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.Fragments.LogInFragment;
@@ -33,6 +41,9 @@ public class HomePage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+
+        LinearLayout ln= (LinearLayout) findViewById(R.id.activity_home_page);
+
         //Fragments
         logInFragment = new LogInFragment();
         signUpFragment = new SignUpFragment();
@@ -49,7 +60,14 @@ public class HomePage extends AppCompatActivity{
         tabLayout.setupWithViewPager(viewPager);
 
 
+
+
+
+
+
     }
+
+
 
 
 }
