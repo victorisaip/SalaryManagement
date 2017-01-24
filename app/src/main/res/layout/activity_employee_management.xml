@@ -4,37 +4,39 @@
     android:id="@+id/activity_employee_management"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context="com.example.victo.salarymanagement.Activities.EmployeeManagementActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <include
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
             layout="@layout/toolbar_layout"
-            >
-        </include>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
 
     </android.support.design.widget.AppBarLayout>
 
 
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:id="@+id/fr_employees">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/fr_employees"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/fr_detail_employees">
-    </FrameLayout>
+        </FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/fr_detail_employees"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></FrameLayout>
+    </LinearLayout>
 
 </LinearLayout>
