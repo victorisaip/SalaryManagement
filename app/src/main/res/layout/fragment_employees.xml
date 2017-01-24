@@ -29,6 +29,4 @@
             android:id="@+id/recycler_view_employees">
         </android.support.v7.widget.RecyclerView>
     </FrameLayout>
-
-
 </LinearLayout>

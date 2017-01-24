@@ -115,7 +115,7 @@ public class EmployeesFragment extends Fragment implements EmployeesAdapter.List
         l = DatabaseManager.getInstance().employees;
         while(i<DatabaseManager.getInstance().employees.size() && flag == false){
 
-            if(l.get(pos).getEmail().equals(email)){
+            if(l.get(i).getEmail().equals(email)){
                 pos = i;
                 flag = true;
             } else {
