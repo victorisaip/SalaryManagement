@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.example.victo.salarymanagement.Fragments.TimesheetDetailToApproveFragment;
 import com.example.victo.salarymanagement.Fragments.TimesheetsFragment;
@@ -17,6 +18,11 @@ import com.example.victo.salarymanagement.R;
 
 public class ApproveTimesheetsActivity extends AppCompatActivity implements
         TimesheetApproveIcomm{
+
+    LinearLayout layout;
+    int sizeInDp;
+
+
     Toolbar toolbar;
     FragmentManager fm;
     FragmentTransaction ft;
@@ -26,6 +32,17 @@ public class ApproveTimesheetsActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_approve_timesheets);
+
+        layout = (LinearLayout) findViewById(R.id.layout_detail_manager);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)layout.getLayoutParams();
+        float scale = getResources().getDisplayMetrics().density;
+        int dpAsPixels = (int) (sizeInDp*scale + 0.5f);
+
+        params.setMargins(dpAsPixels, 0, dpAsPixels, 0);
+        layout.setLayoutParams(params);
+
+
+
         toolbar = (Toolbar) findViewById(R.id.my_tool_bar);
         setSupportActionBar(toolbar);
         timeSheetsFragment = new TimesheetsToApproveFragment();
