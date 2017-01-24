@@ -2,6 +2,8 @@ package com.example.victo.salarymanagement.Fragments;
 
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -66,6 +68,12 @@ public class LogInFragment extends Fragment {
         etPassword = (EditText) view.findViewById(R.id.eTpassword);
         btnLogin = (Button) view.findViewById(R.id.btnLogIn);
 
+        AssetManager assetManager = getActivity().getAssets();
+        Typeface typeface = Typeface.createFromAsset(assetManager,"SourceSansPro-Regular.otf");
+        etUserName.setTypeface(typeface);
+        etPassword.setTypeface(typeface);
+        btnLogin.setTypeface(typeface);
+
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Salary_Management_DB");
         myRefusers = myRef.child("Users");
@@ -109,6 +117,7 @@ public class LogInFragment extends Fragment {
                                     if(post.getBusinessRole().equals("manager")){
                                         myRefusers.removeEventListener(this);
                                         mAuth.removeAuthStateListener(mAuthListener);
+                                        clearWindow();
                                         Intent i = new Intent(getActivity(), MenuForManagers.class);
                                         startActivity(i);
                                     } else {
@@ -160,6 +169,11 @@ public class LogInFragment extends Fragment {
 
                     });
         }
+    }
+
+    public void clearWindow(){
+        etUserName.setText("");
+        etPassword.setText("");
     }
 
     private boolean validateFormLogIn() {

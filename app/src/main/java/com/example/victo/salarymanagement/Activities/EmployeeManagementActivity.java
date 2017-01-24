@@ -6,11 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-
 import com.example.victo.salarymanagement.Fragments.DetailEmployeeFragment;
-import com.example.victo.salarymanagement.Fragments.DetailTimeSheetFragment;
 import com.example.victo.salarymanagement.Fragments.EmployeesFragment;
-import com.example.victo.salarymanagement.Fragments.TimesheetsFragment;
 import com.example.victo.salarymanagement.Interfaces.EmployeeComm;
 import com.example.victo.salarymanagement.R;
 
@@ -45,8 +42,12 @@ public class EmployeeManagementActivity extends AppCompatActivity implements Emp
 
     @Override
     public void onEmployeeDeleted(String employeeEmail) {
-        Log.d("emplyoessInActiviy", "onEmployeeDeleted: "+employeeEmail);
         employeesFragment.updateRecyclerView(employeeEmail);
 
+    }
+
+    @Override
+    public void onEmployeeUpdated(String name, String email, String status, String experienceLevel) {
+        employeesFragment.onEmployeeUpdated(name,email,status,experienceLevel);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.victo.salarymanagement.Fragments;
 
 
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -63,6 +65,16 @@ public class SignUpFragment extends Fragment {
         chbManager = (RadioButton) view.findViewById(R.id.chbManager);
         chbEmployee = (RadioButton) view.findViewById(R.id.chbEmployee);
 
+        AssetManager assetManager = getActivity().getAssets();
+        Typeface typeface = Typeface.createFromAsset(assetManager,"SourceSansPro-Regular.otf");
+
+        btnRegister.setTypeface(typeface);
+        tvBusinessRole.setTypeface(typeface);
+        etRegisterName.setTypeface(typeface);
+        etRegisterEmail.setTypeface(typeface);
+        etRegisterPassword.setTypeface(typeface);
+        chbManager.setTypeface(typeface);
+        chbEmployee.setTypeface(typeface);
 
         //Authentication
         mAuth = FirebaseAuth.getInstance();

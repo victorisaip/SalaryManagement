@@ -1,11 +1,14 @@
 package com.example.victo.salarymanagement.Activities;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
@@ -21,9 +24,11 @@ public class MainMenuForEmployees extends AppCompatActivity {
     private static final String TAG = "STATUS";
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
+
+    Button btnRegisterTimesheet,btnSeeHistory;
+    TextView tv;
+
     Toolbar toolbar;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,14 @@ public class MainMenuForEmployees extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: ");
         ArrayList<Timesheet> timesheets = DatabaseManager.getInstance().timesheets;
+
+        AssetManager assetManager = getAssets();
+        Typeface typeface = Typeface.createFromAsset(assetManager,"SourceSansPro-Regular.otf");
+
+        btnRegisterTimesheet = (Button) findViewById(R.id.btnRegisterTimeSheet);
+        btnSeeHistory = (Button) findViewById(R.id.btnSeeHistory);
+        btnRegisterTimesheet.setTypeface(typeface);
+        btnSeeHistory.setTypeface(typeface);
 
     }
 

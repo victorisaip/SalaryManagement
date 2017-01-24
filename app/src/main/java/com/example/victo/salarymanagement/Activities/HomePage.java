@@ -4,19 +4,17 @@ Project name:  Salary Management
 Description: Apps to manage the employment salary according to the total hours worked.
 Developers: Victor , Saul , Ramesh */
 
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
+
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
+
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.Fragments.LogInFragment;
@@ -33,6 +31,7 @@ public class HomePage extends AppCompatActivity{
     TabLayout tabLayout;
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
+    LinearLayout myLinearLayout;
     DatabaseManager myManager;
     boolean flag = false;
 
@@ -41,8 +40,12 @@ public class HomePage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        myLinearLayout = (LinearLayout) findViewById(R.id.activity_home_page);
+
+
 
         LinearLayout ln= (LinearLayout) findViewById(R.id.activity_home_page);
+
 
         //Fragments
         logInFragment = new LogInFragment();

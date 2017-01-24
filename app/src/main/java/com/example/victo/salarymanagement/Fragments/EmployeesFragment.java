@@ -2,6 +2,8 @@ package com.example.victo.salarymanagement.Fragments;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.victo.salarymanagement.Adapters.EmployeesAdapter;
@@ -31,12 +34,11 @@ import java.util.List;
 public class EmployeesFragment extends Fragment implements EmployeesAdapter.ListItemClickListener{
     private static final String TAG = "employees";
     public static RecyclerView recyclerView;
-    private static EmployeesAdapter employeesAdapter;
+    TextView tvLabelEmployee;
+    public static EmployeesAdapter employeesAdapter;
     private static ArrayList<User> myEmployees;
     private static Context context;
     private static EmployeesFragment employeesFragment;
-
-
 
     public EmployeesFragment() {
         // Required empty public constructor
@@ -49,6 +51,10 @@ public class EmployeesFragment extends Fragment implements EmployeesAdapter.List
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_employees, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_employees);
+        tvLabelEmployee = (TextView) view.findViewById(R.id.tv_title_employee);
+        AssetManager assetManager = getActivity().getAssets();
+        Typeface regular = Typeface.createFromAsset(assetManager,"SourceSansPro-Bold.otf");
+        tvLabelEmployee.setTypeface(regular);
         context = getActivity();
         employeesFragment = this;
         setListenerUsers();
@@ -94,6 +100,11 @@ public class EmployeesFragment extends Fragment implements EmployeesAdapter.List
     public void updateRecyclerView(String s){
         int pos = positionEmployee(s);
         employeesAdapter.removeItem(pos);
+    }
+
+    public void onEmployeeUpdated(String name, String email, String status, String expLevel){
+        int pos = positionEmployee(email);
+        employeesAdapter.updateItem(pos,name,email,status,expLevel);
     }
 
     public int positionEmployee(String email){
