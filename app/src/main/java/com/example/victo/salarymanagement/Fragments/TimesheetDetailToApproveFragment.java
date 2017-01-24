@@ -1,6 +1,8 @@
 package com.example.victo.salarymanagement.Fragments;
 
 
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -48,6 +50,21 @@ public class TimesheetDetailToApproveFragment extends Fragment {
         etTimesheetTotalHours = (EditText) view.findViewById(R.id.etTimesheetTotalHours);
         etTimesheetActualDate = (EditText) view.findViewById(R.id.etTimesheetDate);
         etTimesheetEmail = (EditText) view.findViewById(R.id.etTimesheetEmployee);
+
+        AssetManager assetManager = getActivity().getAssets();
+        Typeface regular = Typeface.createFromAsset(assetManager,"SourceSansPro-Regular.otf");
+
+        etTimesheetStartDate.setTypeface(regular);
+        etTimesheetApprover.setTypeface(regular);
+        etTimesheetEndDate.setTypeface(regular);
+        etTimesheetMonday.setTypeface(regular);
+        etTimesheetTuesday.setTypeface(regular);
+        etTimesheetWednesday.setTypeface(regular);
+        etTimesheetThursday.setTypeface(regular);
+        etTimesheetFriday.setTypeface(regular);
+        etTimesheetTotalHours.setTypeface(regular);
+        etTimesheetEmail.setTypeface(regular);
+        etTimesheetActualDate.setTypeface(regular);
 
 
         btnApprove = (Button) view.findViewById(R.id.btnApprove);

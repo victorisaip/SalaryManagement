@@ -25,6 +25,12 @@
         <item name="cardBackgroundColor">#E0E0E0</item>
     </style>
 
+    <style name="DetailTimesheetCardViewStyle" parent="Theme.AppCompat.Light">
+        <item name="cardCornerRadius">2dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardBackgroundColor">#eaf5ef</item>
+    </style>
+
     <style name="Title_style" parent="Theme.AppCompat.Light">
         <item name="cardCornerRadius">2dp</item>
         <item name="cardElevation">2dp</item>

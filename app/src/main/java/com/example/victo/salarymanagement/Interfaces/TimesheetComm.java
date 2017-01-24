@@ -7,6 +7,17 @@ import com.example.victo.salarymanagement.POJOs.Timesheet;
  */
 
 public interface TimesheetComm {
-    public void setTextToTimeSheet(String text);
+    public void setTextToTimeSheet(String startDate,
+                                   String endDate,
+                                   String approver,
+                                   String status,
+                                   String monday,
+                                   String tuesday,
+                                   String wednesday,
+                                   String thursday,
+                                   String friday,
+                                   String totalHours,
+                                   String email,
+                                   String actualDate);
 
 }

@@ -74,15 +74,30 @@ public class TimesheetsFragment extends Fragment implements ListItemClickListene
         Timesheet timesheet = new Timesheet();
         timesheet = timesheetArrayList.get(clickedItemIndex);
         TimesheetComm timesheetComm = (TimesheetComm) getActivity();
-        timesheetComm.setTextToTimeSheet("Approver: " + timesheet.getApprover() + "\n" +
-        "Actual date: "+ timesheet.getActualDate()+ "\n" +
-        "Start date: "+ timesheet.getStartDate() + "\n" +
-        "Hours monday: "+timesheet.getMonday() + "\n" +
-                "Hours tuesday: "+timesheet.getTuesday() + "\n" +
-                "Hours wednesday: "+timesheet.getWednesday() + "\n" +
-                "Hours thursday: "+timesheet.getThursday() + "\n" +
-                "Hours friday: "+timesheet.getFriday() + "\n" +
-        "Total hours: "+timesheet.getTotalHours() );
+        String startDate = timesheet.getStartDate();
+        String endDate = timesheet.getEndDate();
+        String approver = timesheet.getApprover();
+        String status = timesheet.getStatus();
+        String monday = timesheet.getMonday();
+        String tuesday = timesheet.getTuesday();
+        String wednesday = timesheet.getWednesday();
+        String thursday = timesheet.getThursday();
+        String friday = timesheet.getFriday();
+        String totalHours = timesheet.getTotalHours();
+        String email = timesheet.getEmail();
+        String actualDate = timesheet.getActualDate();
+        timesheetComm.setTextToTimeSheet(startDate,
+                endDate,
+                approver,
+                status,
+                monday,
+                tuesday,
+                wednesday,
+                thursday,
+                friday,
+                totalHours,
+                email,
+                actualDate);
     }
 
 

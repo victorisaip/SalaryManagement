@@ -1,5 +1,7 @@
 package com.example.victo.salarymanagement.Activities;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -7,10 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.example.victo.salarymanagement.BroadcastReceivers.MyBroadcastReceiver;
 import com.example.victo.salarymanagement.Fragments.DetailTimeSheetFragment;
 import com.example.victo.salarymanagement.Fragments.TimesheetsFragment;
 import com.example.victo.salarymanagement.Interfaces.TimesheetComm;
+import com.example.victo.salarymanagement.POJOs.Timesheet;
 import com.example.victo.salarymanagement.R;
 
 
@@ -23,7 +25,6 @@ public class SeeTimeSheetHistoryActivity extends AppCompatActivity implements Ti
     FragmentTransaction ft;
     TimesheetsFragment timeSheetsFragment;
     DetailTimeSheetFragment detailTimeSheetFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +39,36 @@ public class SeeTimeSheetHistoryActivity extends AppCompatActivity implements Ti
         ft.add(R.id.frTimeSheets, timeSheetsFragment);
         ft.add(R.id.frDetailTimeSheet, detailTimeSheetFragment);
         ft.commit();
+
     }
 
     @Override
-    public void setTextToTimeSheet(String text) {
-        detailTimeSheetFragment.setMyTextViewTo(text);
+    public void setTextToTimeSheet(String startDate,
+                                   String endDate,
+                                   String approver,
+                                   String status,
+                                   String monday,
+                                   String tuesday,
+                                   String wednesday,
+                                   String thursday,
+                                   String friday,
+                                   String totalHours,
+                                   String email,
+                                   String actualDate) {
+
+
+        detailTimeSheetFragment.setMyTextViewTo(startDate,
+                endDate,
+                approver,
+                status,
+                 monday,
+                tuesday,
+                wednesday,
+                thursday,
+                friday,
+                totalHours,
+                email,
+                actualDate);
     }
 
 
@@ -54,6 +80,8 @@ public class SeeTimeSheetHistoryActivity extends AppCompatActivity implements Ti
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
+
 
 
 
