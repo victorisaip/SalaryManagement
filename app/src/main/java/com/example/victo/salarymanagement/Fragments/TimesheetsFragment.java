@@ -1,7 +1,6 @@
 package com.example.victo.salarymanagement.Fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import com.example.victo.salarymanagement.Adapters.TimesheetsAdapter;
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.Interfaces.TimesheetComm;
 import com.example.victo.salarymanagement.POJOs.Timesheet;
-import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,13 +26,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.victo.salarymanagement.Adapters.TimesheetsAdapter.*;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.ListItemClickListener{
+public class TimesheetsFragment extends Fragment implements ListItemClickListener{
     private static final String TAG = "Timesheets";
     public RecyclerView recyclerView;
     private TimesheetsAdapter timesheetsAdapter;
+    TimesheetsFragment timesheetsFragment;
     private Toast mToast;
     private static ArrayList<Timesheet> timesheets;
 
@@ -62,6 +63,7 @@ public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.Li
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(timesheetsAdapter);
         setListenerTimesheets();
+        timesheetsFragment = this;
         return view;
     }
 
@@ -72,16 +74,32 @@ public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.Li
         Timesheet timesheet = new Timesheet();
         timesheet = timesheetArrayList.get(clickedItemIndex);
         TimesheetComm timesheetComm = (TimesheetComm) getActivity();
-        timesheetComm.setTextToTimeSheet("Approver: " + timesheet.getApprover() + "\n" +
-        "Actual date: "+ timesheet.getActualDate()+ "\n" +
-        "Start date: "+ timesheet.getStartDate() + "\n" +
-        "Hours monday: "+timesheet.getMonday() + "\n" +
-                "Hours tuesday: "+timesheet.getTuesday() + "\n" +
-                "Hours wednesday: "+timesheet.getWednesday() + "\n" +
-                "Hours thursday: "+timesheet.getThursday() + "\n" +
-                "Hours friday: "+timesheet.getFriday() + "\n" +
-        "Total hours: "+timesheet.getTotalHours() );
+        String startDate = timesheet.getStartDate();
+        String endDate = timesheet.getEndDate();
+        String approver = timesheet.getApprover();
+        String status = timesheet.getStatus();
+        String monday = timesheet.getMonday();
+        String tuesday = timesheet.getTuesday();
+        String wednesday = timesheet.getWednesday();
+        String thursday = timesheet.getThursday();
+        String friday = timesheet.getFriday();
+        String totalHours = timesheet.getTotalHours();
+        String email = timesheet.getEmail();
+        String actualDate = timesheet.getActualDate();
+        timesheetComm.setTextToTimeSheet(startDate,
+                endDate,
+                approver,
+                status,
+                monday,
+                tuesday,
+                wednesday,
+                thursday,
+                friday,
+                totalHours,
+                email,
+                actualDate);
     }
+
 
     private static void setListenerTimesheets(){
         timesheets = new ArrayList<>();
@@ -118,5 +136,7 @@ public class TimesheetsFragment extends Fragment implements TimesheetsAdapter.Li
             }
         });
     }
+
+
 
 }

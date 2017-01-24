@@ -1,10 +1,8 @@
-
-
 package com.example.victo.salarymanagement.Fragments;
-
-
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,10 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.victo.salarymanagement.Activities.SeeTimeSheetHistoryActivity;
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.POJOs.Email;
+import com.example.victo.salarymanagement.POJOs.Timesheet;
 import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,8 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -51,6 +50,8 @@ public class RegisterTimesheetFragment extends Fragment {
     private static ArrayList<User> myManagers;
     private static Context context;
     Button sendEmailBtn;
+    TextView tvStartDate,tvEndDate,tvApprover,tvMonday,tvTuesday,tvWednesday,tvThursday,tvFriday,tvTotalHours,
+    tvActualdate,tvEmail,tvHours,tvDaysOfWeek,tvStatus;
 
     public RegisterTimesheetFragment() {
         // Required empty public constructor
@@ -76,6 +77,19 @@ public class RegisterTimesheetFragment extends Fragment {
         etFriday = (EditText) view.findViewById(R.id.etFriday);
         etActualDate = (EditText) view.findViewById(R.id.etActualDate);
         spApprover = (Spinner)view.findViewById(R.id.SpinSelectApprover);
+        tvStartDate = (TextView) view.findViewById(R.id.tvStartDate);
+        tvEndDate = (TextView) view.findViewById(R.id.tvEndDate);
+        tvApprover = (TextView) view.findViewById(R.id.tvApproveer);
+        tvMonday = (TextView) view.findViewById(R.id.tvMonday);
+        tvTuesday = (TextView) view.findViewById(R.id.tvTuesday);
+        tvWednesday = (TextView) view.findViewById(R.id.tvWednesday);
+        tvThursday = (TextView) view.findViewById(R.id.tvThursday);
+        tvFriday = (TextView) view.findViewById(R.id.tvFriday);
+        tvActualdate = (TextView) view.findViewById(R.id.tvActualDate);
+        tvTotalHours = (TextView) view.findViewById(R.id.tvNumberOfHours);
+        tvHours = (TextView) view.findViewById(R.id.tvHours);
+        tvDaysOfWeek = (TextView) view.findViewById(R.id.tvDaysOfWeek);
+        tvStatus = (TextView) view.findViewById(R.id.tvStatus);
 
         mstartDate = startDate.getText().toString();
         mEndDate = etEndDate.getText().toString();
@@ -92,6 +106,36 @@ public class RegisterTimesheetFragment extends Fragment {
         mWednesday = etWednesday.getText().toString();
         mThursday = etThursday.getText().toString();
         mFriday = etFriday.getText().toString();
+
+        AssetManager assetManager = getActivity().getAssets();
+        Typeface regular = Typeface.createFromAsset(assetManager,"SourceSansPro-Regular.otf");
+        Typeface bold = Typeface.createFromAsset(assetManager,"SourceSansPro-Bold.otf");
+        startDate.setTypeface(regular);
+        etStatus.setTypeface(regular);
+        etTotalHours.setTypeface(regular);
+        btnRegisterTimesheet.setTypeface(regular);
+        etMonday.setTypeface(regular);
+        etTuesday.setTypeface(regular);
+        etWednesday.setTypeface(regular);
+        etThursday.setTypeface(regular);
+        etFriday.setTypeface(regular);
+        etActualDate.setTypeface(regular);
+
+        tvStartDate.setTypeface(bold);
+        tvEndDate.setTypeface(bold);
+        tvApprover.setTypeface(bold);
+        tvMonday.setTypeface(bold);
+        tvTuesday.setTypeface(bold);
+        tvWednesday.setTypeface(bold);
+        tvThursday.setTypeface(bold);
+        tvFriday.setTypeface(bold);
+        tvActualdate.setTypeface(bold);
+        tvTotalHours.setTypeface(bold);
+        tvHours.setTypeface(bold);
+        tvDaysOfWeek.setTypeface(bold);
+        tvStatus.setTypeface(bold);
+        sendEmailBtn.setTypeface(regular);
+
 
 
         Date actualDate = new Date();
@@ -134,8 +178,9 @@ public class RegisterTimesheetFragment extends Fragment {
                         "" +
                         "\n\nThanks\n"+email;
 
-            myemail  = new Email(spApprover.getSelectedItem().toString(),"Time Sheet for the current week"+mstartDate ,myemailBody);
-
+                myemail = new Email(spApprover.getSelectedItem().toString(), "Time Sheet for the current week" + mstartDate, myemailBody);
+                Intent i = new Intent(getActivity(), SeeTimeSheetHistoryActivity.class);
+                getActivity().startActivity(i);
             }
         });
 
@@ -231,7 +276,7 @@ public class RegisterTimesheetFragment extends Fragment {
     public static void addApprovers() {
         ArrayList<String> list = new ArrayList<>();
 
-        for (User manger:myManagers) {
+        for (User manger: myManagers) {
             String name = manger.getEmail();
             list.add(name);
             Log.d("\nRamesh",name);
@@ -298,12 +343,7 @@ public class RegisterTimesheetFragment extends Fragment {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                DatabaseManager.getInstance().users = new ArrayList<>();
-//                DatabaseManager.getInstance().employees = new ArrayList<>();
-
                 myManagers = new ArrayList<User>();
-
-
                 Log.d(TAG, "Listening for registered users " + dataSnapshot.getChildrenCount());
                 Log.d(TAG, "===========================================");
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -326,7 +366,6 @@ public class RegisterTimesheetFragment extends Fragment {
     }
 public void sendEmail()
 {
-
     if (myemail != null)
     {
 

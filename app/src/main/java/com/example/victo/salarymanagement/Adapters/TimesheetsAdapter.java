@@ -1,6 +1,9 @@
 package com.example.victo.salarymanagement.Adapters;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,14 +37,21 @@ public class TimesheetsAdapter extends RecyclerView.Adapter<TimesheetsAdapter.Vi
         public TextView actualDate,approver,totalHours;
 
         public LinearLayout linearLayout;
+        private CardView cv;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            cv = (CardView) itemView.findViewById(R.id.cv_timesheet);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.timesheetLinearLayout);
             actualDate = (TextView) itemView.findViewById(R.id.tvRActualDate);
             approver = (TextView) itemView.findViewById(R.id.tvRApprover);
             totalHours = (TextView) itemView.findViewById(R.id.tvRTotalHours);
             itemView.setOnClickListener(this);
+            AssetManager assetManager = context.getAssets();
+            Typeface regular = Typeface.createFromAsset(assetManager,"SourceSansPro-Regular.otf");
+            actualDate.setTypeface(regular);
+            approver.setTypeface(regular);
+            totalHours.setTypeface(regular);
         }
 
         @Override
@@ -69,7 +79,7 @@ public class TimesheetsAdapter extends RecyclerView.Adapter<TimesheetsAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.timesheet_row,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.timesheet_card,parent,false);
         return new ViewHolder(itemView);
 
     }
@@ -93,6 +103,11 @@ public class TimesheetsAdapter extends RecyclerView.Adapter<TimesheetsAdapter.Vi
     }
     public List<Timesheet> getTimesheetList(){
         return this.timesheetList;
+    }
+
+    public void addItem(Timesheet timesheet){
+        timesheetList.add(timesheet);
+        notifyDataSetChanged();
     }
 
 

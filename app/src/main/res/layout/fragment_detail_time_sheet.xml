@@ -1,14 +1,176 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_detail_timesheet"
+    style="@style/DetailTimesheetCardViewStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:cardCornerRadius="4dp"
     tools:context="com.example.victo.salarymanagement.Fragments.DetailTimeSheetFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/tvDetailTimeSheet"
-        android:text="" />
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:text="Start date:" />
 
-</LinearLayout>
+        <EditText
+            android:textSize="17dp"
+            android:enabled="false"
+            android:id="@+id/etDetailTimesheetStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End date:" />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetEndDate"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:textSize="17dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="17dp"
+            android:layout_height="wrap_content"
+            android:text="Approver:" />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetApprover"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:textSize="17dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="17dp"
+            android:layout_height="wrap_content"
+            android:text="Status: " />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetStatus"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:textSize="17dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+
+            android:textSize="17dp"
+            android:layout_height="wrap_content"
+            android:text="Monday: " />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetMonday"
+            android:enabled="false"
+            android:textSize="17dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="17dp"
+            android:layout_height="wrap_content"
+            android:text="Tuesday: " />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetTuesday"
+            android:textSize="17dp"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="17dp"
+            android:layout_height="wrap_content"
+            android:text="Wednesday: " />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetWednesday"
+            android:layout_width="match_parent"
+            android:enabled="false"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="17dp"
+            android:layout_height="wrap_content"
+            android:text="Thursday: " />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetThursday"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:textSize="17dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="17dp"
+            android:layout_height="wrap_content"
+            android:text="Friday: " />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetFriday"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:textSize="17dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="17dp"
+            android:layout_height="wrap_content"
+            android:text="Total hours: " />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetTotalHours"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:text="Date in which was registered: " />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetDate"
+            android:layout_width="match_parent"
+            android:enabled="false"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:text="Employee email: " />
+
+        <EditText
+            android:id="@+id/etDetailTimesheetEmail"
+            android:layout_width="match_parent"
+            android:enabled="false"
+            android:textSize="17dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
+
+
