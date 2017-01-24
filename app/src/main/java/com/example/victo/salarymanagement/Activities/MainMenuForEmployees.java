@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,12 +24,19 @@ public class MainMenuForEmployees extends AppCompatActivity {
     private static final String TAG = "STATUS";
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
+
     Button btnRegisterTimesheet,btnSeeHistory;
     TextView tv;
+
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_for_employees);
+
+        toolbar = (Toolbar) findViewById(R.id.my_tool_bar);
+        setSupportActionBar(toolbar);
+
         Log.d(TAG, "onCreate: ");
         ArrayList<Timesheet> timesheets = DatabaseManager.getInstance().timesheets;
 

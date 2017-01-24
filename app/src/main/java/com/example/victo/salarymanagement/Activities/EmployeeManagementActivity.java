@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import com.example.victo.salarymanagement.Fragments.DetailEmployeeFragment;
 import com.example.victo.salarymanagement.Fragments.EmployeesFragment;
@@ -12,6 +13,7 @@ import com.example.victo.salarymanagement.R;
 
 public class EmployeeManagementActivity extends AppCompatActivity implements EmployeeComm {
 
+    Toolbar toolbar;
     FragmentManager fm;
     FragmentTransaction ft;
     static EmployeesFragment employeesFragment;
@@ -21,6 +23,9 @@ public class EmployeeManagementActivity extends AppCompatActivity implements Emp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_management);
+
+        toolbar = (Toolbar) findViewById(R.id.my_tool_bar);
+        setSupportActionBar(toolbar);
         employeesFragment = new EmployeesFragment();
         detailEmployeesFragment = new DetailEmployeeFragment();
         fm = getSupportFragmentManager();
