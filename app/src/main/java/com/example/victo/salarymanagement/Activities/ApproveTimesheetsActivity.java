@@ -82,6 +82,11 @@ public class ApproveTimesheetsActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void updateItem(String startDate, String endDate, String email, String status) {
+        timeSheetsFragment.updateTimesheet(startDate,endDate,email,status);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);

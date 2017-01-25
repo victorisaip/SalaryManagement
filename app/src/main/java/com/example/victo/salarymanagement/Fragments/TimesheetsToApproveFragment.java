@@ -76,9 +76,11 @@ public class TimesheetsToApproveFragment extends Fragment implements TimesheetsA
                 timesheet.getFriday(),
                 timesheet.getTotalHours(),
                 timesheet.getEmail(),
-                timesheet.getTotalHours()
+                timesheet.getActualDate()
         );
     }
+
+
 
 
     private static void setListenerTimesheets(){
@@ -115,5 +117,29 @@ public class TimesheetsToApproveFragment extends Fragment implements TimesheetsA
                 Log.d(TAG, "===========================================");
             }
         });
+    }
+
+    public void updateTimesheet(String startDate,String endDate,String email, String status){
+        String key = getTimesheetKey(startDate,endDate,email);
+        timesheetsAdapter.updateItem(key,status);
+    }
+
+    public String getTimesheetKey(String startdate,String endDate,String email){
+        int i = 0;
+        String key = "";
+        boolean flag = false;
+        while (i<timesheets.size() && flag == false){
+            Timesheet t = timesheets.get(i);
+            if(t.getStartDate().equals(startdate) &&
+                    t.getEndDate().equals(endDate)&&
+                    t.getEmail().equals(email)){
+                key = t.getKey();
+                flag = true;
+            } else {
+                i++;
+            }
+        }
+
+        return key;
     }
 }

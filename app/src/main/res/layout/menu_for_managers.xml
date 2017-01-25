@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/menu_for_managers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,10 +30,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            app:cardCornerRadius="4dp">
+            
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="0dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/paisaje_natural_e"/>
+
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please select one option: "
+            android:textSize="17dp" />
+
         <Button
             android:id="@+id/btnEmployeeManagement"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="30dp"
             android:onClick="goEmployeeManagement"
             android:text="Employee Management" />
 
@@ -40,7 +65,9 @@
         <Button
             android:id="@+id/btnApproveTimesheets"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="30dp"
             android:onClick="approveTimesheets"
             android:text="Approve timesheets" />
 
