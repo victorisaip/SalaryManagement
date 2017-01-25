@@ -1,5 +1,6 @@
 package com.example.victo.salarymanagement.Activities;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import com.example.victo.salarymanagement.Fragments.DetailEmployeeFragment;
 import com.example.victo.salarymanagement.Fragments.EmployeesFragment;
 import com.example.victo.salarymanagement.Interfaces.EmployeeComm;
 import com.example.victo.salarymanagement.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class EmployeeManagementActivity extends AppCompatActivity implements EmployeeComm {
 
@@ -21,6 +23,7 @@ public class EmployeeManagementActivity extends AppCompatActivity implements Emp
     FragmentTransaction ft;
     static EmployeesFragment employeesFragment;
     DetailEmployeeFragment detailEmployeesFragment;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,33 +58,5 @@ public class EmployeeManagementActivity extends AppCompatActivity implements Emp
         employeesFragment.onEmployeeUpdated(name,email,status,experienceLevel);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
-//
-//
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        switch (id) {
-//            case R.id.action_logout:
-//
-//
-//                break;
-//            case R.id.action_help:
-//
-//                break;
-//
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+
 }

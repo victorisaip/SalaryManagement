@@ -112,6 +112,8 @@ public class MainMenuForEmployees extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_logout:
+                mAuth.signOut();
+                finish();
                 break;
             case R.id.action_help:
 

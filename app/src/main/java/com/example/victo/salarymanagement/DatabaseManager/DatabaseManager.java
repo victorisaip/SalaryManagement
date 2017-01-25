@@ -298,13 +298,10 @@ public class DatabaseManager {
 
     public void updateStateTimesheet(String startDate,String endDate,String email, String status){
         String key = getTimesheetKey(startDate,endDate,email);
+        Log.d(TAG, "updateStateTimesheet: "+key);
         myRefTimesheets.child(key).child("status").setValue(status);
 
     }
-
-
-
-
     public static ArrayList<Timesheet> getTimesheets() {
         return timesheets;
     }
@@ -327,6 +324,7 @@ public class DatabaseManager {
                     t.getEndDate().equals(endDate)&&
                     t.getEmail().equals(email)){
                 key = t.getKey();
+                Log.d(TAG, "getTimesheetKey: "+key);
                 flag = true;
             } else {
                 i++;

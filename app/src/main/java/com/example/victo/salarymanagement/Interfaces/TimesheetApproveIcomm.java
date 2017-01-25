@@ -17,4 +17,6 @@ public interface TimesheetApproveIcomm {
                                    String totalHours,
                                    String email,
                                    String actualDate);
+
+    public void updateItem(String startDate,String endDate,String email, String status);
 }

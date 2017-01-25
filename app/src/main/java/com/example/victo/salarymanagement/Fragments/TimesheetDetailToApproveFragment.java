@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
+import com.example.victo.salarymanagement.Interfaces.TimesheetApproveIcomm;
 import com.example.victo.salarymanagement.R;
 
 /**
@@ -78,6 +79,10 @@ public class TimesheetDetailToApproveFragment extends Fragment {
                         "Approved");
                 etTimesheetStatus.setText("Approved");
                 Toast.makeText(getActivity(), "Timesheet approved", Toast.LENGTH_SHORT).show();
+                TimesheetApproveIcomm timesheetApproveIcomm = (TimesheetApproveIcomm) getActivity();
+                timesheetApproveIcomm.updateItem(etTimesheetStartDate.getText().toString(),
+                        etTimesheetEndDate.getText().toString(),etTimesheetEmail.getText().toString(),
+                        etTimesheetStatus.getText().toString());
             }
         });
 
@@ -89,6 +94,10 @@ public class TimesheetDetailToApproveFragment extends Fragment {
                         "Rejected");
                 etTimesheetStatus.setText("Rejected");
                 Toast.makeText(getActivity(), "Timesheet rejected", Toast.LENGTH_SHORT).show();
+                TimesheetApproveIcomm timesheetApproveIcomm = (TimesheetApproveIcomm) getActivity();
+                timesheetApproveIcomm.updateItem(etTimesheetStartDate.getText().toString(),
+                        etTimesheetEndDate.getText().toString(),etTimesheetEmail.getText().toString(),
+                        etTimesheetStatus.getText().toString());
 
             }
         });
@@ -108,7 +117,8 @@ public class TimesheetDetailToApproveFragment extends Fragment {
                         String totalHours,
                         String email,
                         String actualDate){
-
+        etTimesheetStatus.setText(status);
+        etTimesheetApprover.setText(approver);
        etTimesheetStartDate.setText(startDate);
         etTimesheetEndDate.setText(endDate);
         etTimesheetMonday.setText(monday);
@@ -120,4 +130,6 @@ public class TimesheetDetailToApproveFragment extends Fragment {
         etTimesheetEmail.setText(email);
         etTimesheetActualDate.setText(actualDate);
     }
+
+
 }
