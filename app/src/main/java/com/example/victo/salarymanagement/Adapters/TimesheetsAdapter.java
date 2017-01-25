@@ -105,9 +105,25 @@ public class TimesheetsAdapter extends RecyclerView.Adapter<TimesheetsAdapter.Vi
         return this.timesheetList;
     }
 
-    public void addItem(Timesheet timesheet){
-        timesheetList.add(timesheet);
+    public void updateItem(String key,String status){
+        int pos = getPos(key);
+        timesheetList.get(pos).setStatus(status);
         notifyDataSetChanged();
+    }
+
+    private int getPos(String key){
+        int i = 0;
+        int pos = 0;
+        boolean flag = false;
+        while (i<timesheetList.size() && flag == false){
+            if(timesheetList.get(i).getKey().equals(key)){
+                pos = i;
+                flag = true;
+            }  else {
+                i = i + 1;
+            }
+        }
+        return pos;
     }
 
 
