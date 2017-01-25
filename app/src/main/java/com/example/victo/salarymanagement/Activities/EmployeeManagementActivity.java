@@ -1,5 +1,6 @@
 package com.example.victo.salarymanagement.Activities;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import com.example.victo.salarymanagement.Fragments.DetailEmployeeFragment;
 import com.example.victo.salarymanagement.Fragments.EmployeesFragment;
 import com.example.victo.salarymanagement.Interfaces.EmployeeComm;
 import com.example.victo.salarymanagement.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class EmployeeManagementActivity extends AppCompatActivity implements EmployeeComm {
 
@@ -21,6 +23,7 @@ public class EmployeeManagementActivity extends AppCompatActivity implements Emp
     FragmentTransaction ft;
     static EmployeesFragment employeesFragment;
     DetailEmployeeFragment detailEmployeesFragment;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,8 @@ public class EmployeeManagementActivity extends AppCompatActivity implements Emp
 
         switch (id) {
             case R.id.action_logout:
+                firebaseAuth.signOut();
+                finish();
                 break;
             case R.id.action_help:
 

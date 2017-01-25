@@ -86,7 +86,7 @@
         style="@style/DetailTimesheetCardViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="3dp">
         <LinearLayout
@@ -224,7 +224,7 @@
         style="@style/DetailTimesheetCardViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="3dp">
         <LinearLayout
@@ -282,18 +282,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/btnRegisterTimeSheet"
             android:gravity="center"
+            android:layout_weight="1"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Register timesheet" />
         <Button
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_width="300dp"
             android:layout_height="wrap_content"

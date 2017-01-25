@@ -1,24 +1,31 @@
 package com.example.victo.salarymanagement.Activities;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.victo.salarymanagement.DatabaseManager.DatabaseManager;
 import com.example.victo.salarymanagement.POJOs.User;
 import com.example.victo.salarymanagement.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class MenuForManagers extends AppCompatActivity {
 
     Toolbar toolbar;
-    LinearLayout linearLayout;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = firebaseAuth.getCurrentUser();
+    Button btnEmployeeManagement, btnApproveTimesheets;
 
 
     @Override
@@ -28,13 +35,13 @@ public class MenuForManagers extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.my_tool_bar);
         setSupportActionBar(toolbar);
+        btnApproveTimesheets = (Button) findViewById(R.id.btnApproveTimesheets);
+        btnEmployeeManagement = (Button) findViewById(R.id.btnEmployeeManagement);
 
-
-
-//        linearLayout = (LinearLayout) findViewById(R.id.layout_menu_manager);
-//        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)linearLayout.getLayoutParams();
-//        params.setMargins(100, 0, 0, 0);
-//        linearLayout.setLayoutParams(params);
+        AssetManager assetManager = getAssets();
+        Typeface regular = Typeface.createFromAsset(assetManager,"SourceSansPro-Regular.otf");
+        btnEmployeeManagement.setTypeface(regular);
+        btnApproveTimesheets.setTypeface(regular);
 
     }
 
@@ -72,6 +79,8 @@ public class MenuForManagers extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_logout:
+                firebaseAuth.signOut();
+                finish();
                 break;
             case R.id.action_help:
 
